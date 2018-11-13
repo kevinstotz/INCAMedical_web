@@ -1,0 +1,26 @@
+.footer {
+  width: 100%;
+  padding: 10px;
+  margin: 10px;
+  position: relative;
+  border: solid #f8f8f8;
+}
+
+.bg-primary {
+ background-color: #000 !important;
+}
+
+
+
+.bg-circle a, a:hover, .media a:focus
+{
+  text-decoration: none !important;
+  outline: none;
+  color: #ececec;
+}
+.bg-circle-outline a, a:hover, .media a:focus
+{
+  text-decoration: none !important;
+  outline: none;
+  color: #ececec;
+}

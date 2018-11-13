@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>INCA Medical</title>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="dist/jstree/themes/default/style.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/settings/indicator.css">
+        <link rel="stylesheet" type="text/css" href="css/form-field.css">
+        <link rel="stylesheet" type="text/css" href="css/header.css">
+        <link rel="stylesheet" type="text/css" href="css/button.css">
+        <link rel="stylesheet" type="text/css" href="css/footer.css">
+        <link rel="stylesheet" type="text/css" href="css/table.css">
+        <link rel="stylesheet" type="text/css" href="css/select.css">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <script>$(function(){ $("#header").load("includes/header.html", function() {
+                      registerHeaderEvents();
+                    }); });</script>
+        <script>$(function(){ $("#footer").load("includes/footer.html", function() {
+                      registerFooterEvents();
+                    }); });</script>
+
+        <script>$(function(){ $("#audits-table-head").load("includes/audits/table/table-head.html", function() {
+                      registerTableHeadEvents();
+                    }); });</script>
+        <script>$(function(){ $("#audits-table-first-row").load("includes/audits/table/body/first-row.html", function() {
+                      registerTableFirstRowEvents();
+                    }); });</script>
+        <script>$(function(){ $("#audits-table-remaining-rows").load("includes/audits/table/body/remaining-rows.html", function() {
+                      registerTableRemainingRowEvents();
+                    }); });</script>
+        <script>$(function(){ $("#audits-audits-pane").load("includes/audits/audits/audit.html", function() {
+                      registerAuditsAuditsEvents();
+                    }); });</script>
+        <script>$(function(){ $("#body").load("includes/audits/audits-image-modal.html"); });</script>
+
+        <script>$(function(){ $("#reports-report-pane").load("includes/reports/reports-report.html", function() {
+                      registerReportsReportEvents();
+                    }); });</script>
+        <script>$(function(){ $("#settings-area-pane").load("includes/settings/settings-audit-area.html", function() {
+                      registerSettingsAuditAreaEvents();
+                    }); });</script>
+        <script>$(function(){ $("#settings-facility-pane").load("includes/settings/settings-facility.html", function() {
+                      registerSettingsFacilityEvents();
+                    }); });</script>
+        <script>$(function(){ $("#settings-template-pane").load("includes/settings/settings-template.html", function() {
+                      registerSettingsTemplateEvents();
+                    }); });</script>
+        <script>$(function(){ $("#settings-category-pane").load("includes/settings/settings-category.html", function() {
+                      registerSettingsCategoryEvents();
+                    }); });</script>
+        <script>$(function(){ $("#settings-indicator-pane").load("includes/settings/settings-indicator.html", function() {
+                      registerSettingsIndicatorEvents();
+                    }); });</script>
+
+        <script src="js/utils/utils.js"></script>
+        <script src="dist/jstree/jstree.js"></script>
+        <script src="js/API.js"></script>
+        <script src="js/API/Audit.js"></script>
+        <script src="js/API/AuditArea.js"></script>
+        <script src="js/API/IndicatorType.js"></script>
+        <script src="js/API/IndicatorOption.js"></script>
+        <script src="js/API/ClinicType.js"></script>
+        <script src="js/API/SpecialtyType.js"></script>
+        <script src="js/API/Company.js"></script>
+        <script src="js/API/Template.js"></script>
+        <script src="js/API/Category.js"></script>
+        <script src="js/API/TemplateCategory.js"></script>
+        <script src="js/API/TemplateIndicator.js"></script>
+        <script src="js/API/Indicator.js"></script>
+    </head>
+
+    <body class="body-content">
+      <header id="header" class="header"></header>
+      <div class="main-content">
+          <div class="">
+              <div id="audits-tabs"  class="vertical-tab audits-tabs" role="tabpanel">
+                  <ul class="nav nav-tabs" role="tablist">
+                      <li id="section-audits-audits" role="presentation" class="active">
+                          <a href="#audits-audits-pane" aria-controls="section-audits-audits" role="tab" data-toggle="tab">Audits</a>
+                      </li>
+                  </ul>
+                  <div class="tab-content tabs">
+                      <div role="tabpanel" class="tab-pane fade in active" id="audits-audits-pane"></div>
+                      <div role="tabpanel" class="tab-pane fade" id="audits-area-pane">
+                          <h3>Area</h3>
+                          <table class="blueTable">
+                              <thead id="audits-table-head"></thead>
+                              <tbody>
+                                  <tr id="audits-table-first-row"></tr>
+                                  <tr id="audits-table-remaining-rows"></tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+              <div id="settings-tabs"  class="vertical-tab settings-tabs"  role="tabpanel">
+                  <ul class="nav nav-tabs" role="tablist">
+                      <li id="section-settings-facility" role="presentation" class="active">
+                          <a href="#settings-facility-pane" aria-controls="section-settings-facility" role="tab" data-toggle="tab">Facilities</a>
+                      </li>
+                      <li id="section-settings-area" role="presentation">
+                          <a href="#settings-area-pane" aria-controls="section-settings-area" role="tab" data-toggle="tab">Areas</a>
+                      </li>
+                      <li id="section-settings-category" role="presentation">
+                          <a href="#settings-category-pane" aria-controls="section-settings-category" role="tab" data-toggle="tab">Category</a>
+                      </li>
+                      <li id="section-settings-indicator" role="presentation">
+                          <a href="#settings-indicator-pane" aria-controls="section-settings-indicator" role="tab" data-toggle="tab">Indicator</a>
+                      </li>
+                      <li id="section-settings-template" role="presentation">
+                        <a href="#settings-template-pane" aria-controls="section-settings-template" role="tab" data-toggle="tab">Templates</a>
+                      </li>
+                  </ul>
+                  <div class="tab-content tabs settings-tabs">
+                      <div role="tabpanel" class="tab-pane fade in active" id="settings-facility-pane"></div>
+                      <div role="tabpanel" class="tab-pane fade" id="settings-area-pane"></div>
+                      <div role="tabpanel" class="tab-pane fade" id="settings-category-pane"></div>
+                      <div role="tabpanel" class="tab-pane fade" id="settings-indicator-pane"></div>
+                      <div role="tabpanel" class="tab-pane fade" id="settings-template-pane"></div>
+                  </div>
+              </div>
+              <div id="reports-tabs" class="vertical-tab reports-tabs" role="tabpanel">
+                  <ul class="nav nav-tabs" role="tablist">
+                      <li id="section-reports-report" role="presentation" class="active">
+                          <a href="#reports-report-pane" aria-controls="section-reports-report" role="tab" data-toggle="tab">Report</a>
+                      </li>
+                  </ul>
+                  <div class="tab-content tabs">
+                      <div role="tabpanel" class="tab-pane fade in active" id="reports-report-pane">
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <footer id="footer" class="footer"></footer>
+      <script src="js/app.js"></script>
+    </body>
+</html>
