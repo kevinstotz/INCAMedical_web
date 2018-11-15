@@ -17,8 +17,8 @@ a:hover,a:focus{
 
 .vertical-tab .nav-tabs{
    display: table-cell;
-   width: 150px;
-   min-width: 150px;
+   width: 160px;
+   min-width: 160px;
    border: none;
    border-right: 3px solid #079992;
    position: relative;

@@ -294,21 +294,6 @@ $( document ).ready(function() {
       sessionStorage.setItem("indicatorId", 0);
     }
 
-    $(".audit-note").click(function() {
-      $('#modal1').modal({
-          show: true,
-          backdrop: false
-      });
-    });
-
-    $("button.audit-images").click(function() {
-        $("button.audit-images figure").toggleClass("showhide");
-      });
-
-    $("button.audit-question-images").click(function() {
-      $("button.audit-question-images figure").toggleClass("showhide");
-    });
-
     $('#about-us').click(function () {
         console.log("about us");
     });

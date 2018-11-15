@@ -29,7 +29,7 @@ function categoryPaneTemplate(categoryPaneId, name, uuid) {
 
 function categoryTableTemplate(categoryPaneId, uuid) {
   var pane = "";
-
+  pane += '<form  id="audits-table-form-' + uuid + '" class="form input-group-md">';
   pane += '<table class="blueTable">';
   pane += '<thead id="audits-table-head">';
   pane += '<tr>';
@@ -45,33 +45,71 @@ function categoryTableTemplate(categoryPaneId, uuid) {
   pane += '</tr>';
   pane += '</tbody>';
   pane += '</table>';
-
+  pane += '</form>';
   return pane;
 }
 
-function fillIndicatorRow(indicatorName) {
+function addIndicator(indicator) {
   var row = "";
-  row  =  '<tr>';
-  row += '<td>' + indicatorName + '<button class="audit-question-images"><figure class="showhide"><img src="images/sink.png" alt="" /></figure><i class="fa fa-photo"></i></button></td>';
+
+  row = '<td>';
+  row += indicator.text;
+  for (var image in indicator['images']) {
+    row += '<button class="audit-question-images" value=><figure class="showhide"><img src="' + indicator['images'][image].path + '" alt="' + indicator['images'][image].name + '" /></figure><i class="fa fa-photo"></i></button>';
+  }
+  row += '</td>';
+
+  return row;
+}
+
+function addIndicatorOptions(indicator) {
+  var row = "";
+
   row += '<td>';
   row += '<div class="select-style">';
   row += '<select>';
-  row += '<option value="0">Yes</option>';
-  row += '<option value="1">No</option>';
-  row += '<option selected value="2">N/A</option>';
+  for (var option in indicator['options']) {
+    row += '<option value="' + indicator['options'][option].id + '">' + indicator['options'][option].option + '</option>';
+  }
   row += '</select>';
   row += '</div>';
   row += '</td>';
+
+  return row;
+}
+
+function addIndicatorImage(indicator) {
+  var row = "";
   row += '<td class="images">';
+  row += '<button type="button" class="" data-toggle="modal" data-target="#uploadModal"><img width="20px" src="/static/assets/images/upload.png"  alt="upload" /></button>';
   row += '<button class="audit-images">';
   row += '<figure class="showhide">';
-  row += '<img alt="" src="images/sink.png" />';
+  row += '<img alt="" src="/static/assets/images/indicator/sink.png" />';
   row += '</figure><i class="fa fa-photo fa-2x"></i>';
   row += '</button>';
   row += '</td>';
+
+  return row;
+}
+
+function addIndicatorNote(indicator) {
+  var row = "";
+
   row += '<td class="notes">';
   row += '<button class="audit-note"><i class="fa fa-edit fa-2x"></i></button>';
   row += '</td>';
+
+  return row;
+}
+
+function fillIndicatorRow(indicator) {
+  var row = "";
+
+  row  = '<tr>';
+  row += addIndicator(indicator);
+  row += addIndicatorOptions(indicator);
+  row += addIndicatorImage(indicator);
+  row += addIndicatorNote(indicator);
   row += '</tr>';
 
   return row;
@@ -82,11 +120,9 @@ function fillCategoryPaneFirstRow(categoryPaneId, uuid) {
 
   row = '<td></td>';
   row += '<td><div class="select-style">';
-  row += '<select>';
-  row += '<option selected value="0">All Yes</option>';
-  row += '<option value="1">All No</option>';
-  row += '<option value="2">All N/A</option>';
-  row += '<option value="2">All N/O</option>';
+  row += '<select id="select-all" name="' + uuid + '">';
+  row += '<option selected value="8">All Pass</option>';
+  row += '<option value="9">All Fail</option>';
   row += '</select>';
   row += '</div></td>';
   row += '<td></td>';
@@ -99,13 +135,14 @@ function addAuditTab(categoryPaneId, name) {
   var tab = "";
 
   tab = '<li id="section-audits-area" role="presentation">';
-  tab += '<a href="#' + categoryPaneId + '" aria-controls="section-audits-area" role="tab" data-toggle="tab">' + name.substring(0, 7) + ' ...</a>';
+  tab += '<a href="#' + categoryPaneId + '" aria-controls="section-audits-area" role="tab" data-toggle="tab">' + name.substring(0, 10) + ' ...</a>';
   tab += '</li>';
 
   return tab;
 }
 
 function loadAuditTabs(data) {
+  console.log(data);
 
   for (var category in data.attributes['categories']) {
     if (data.attributes['categories'][category].parent == "#") {
@@ -118,11 +155,38 @@ function loadAuditTabs(data) {
       $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].parent).append(categoryTableTemplate("audits-category-pane-category-" + data.attributes['categories'][category].uuid, data.attributes['categories'][category].uuid));
     }
   }
+
   for (var indicator in data.attributes['indicators']) {
     if (data.attributes['indicators'][indicator].parent != "#")  {
-      $("#" + "audits-table-" + data.attributes['indicators'][indicator].parent).append(fillIndicatorRow(data.attributes['indicators'][indicator].text));
+      $("#" + "audits-table-" + data.attributes['indicators'][indicator].parent).append(fillIndicatorRow(data.attributes['indicators'][indicator]));
     }
   }
+
+  $(".audit-note").click(function() {
+    console.log("mpte");
+    $('#modal1').modal({
+        show: true,
+        backdrop: false
+    });
+  });
+
+  $("button.audit-images").click(function() {
+      $(this).children("figure").toggleClass("showhide");
+  });
+
+  $("button.audit-question-images").click(function() {
+    $(this).children("figure").toggleClass("showhide");
+  });
+
+  $("#select-all").change(function() {
+      var value = $(this).val();
+      var $formId = $(this).attr("name");
+      $('#audits-table-form-' + $formId + ' select').each(
+        function(index) {
+            $(this).val(value);
+        }
+    );
+  });
 }
 
 function loadAuditTable(data) {

@@ -31,14 +31,15 @@
         <script>$(function(){ $("#audits-table-first-row").load("includes/audits/table/body/first-row.html", function() {
                       registerTableFirstRowEvents();
                     }); });</script>
-        <script>$(function(){ $("#audits-table-remaining-rows").load("includes/audits/table/body/remaining-rows.html", function() {
+<!--        <script>$(function(){ $("#audits-table-remaining-rows").load("includes/audits/table/body/remaining-rows.html", function() {
                       registerTableRemainingRowEvents();
                     }); });</script>
+  -->
         <script>$(function(){ $("#audits-audits-pane").load("includes/audits/audits/audit.html", function() {
                       registerAuditsAuditsEvents();
                     }); });</script>
-        <script>$(function(){ $("#body").load("includes/audits/audits-image-modal.html"); });</script>
-
+        <script>$(function(){ $("#notebody").load("includes/audits/audits-note-modal.html"); });</script>
+        <script>$(function(){ $("#imagebody").load("includes/audits/audits-image-modal.html"); });</script>
         <script>$(function(){ $("#reports-report-pane").load("includes/reports/reports-report.html", function() {
                       registerReportsReportEvents();
                     }); });</script>
@@ -129,6 +130,8 @@
           </div>
       </div>
       <footer id="footer" class="footer"></footer>
+      <div id="notebody"></div>
+      <div id="imagebody"></div>
       <script src="js/app.js"></script>
     </body>
 </html>
