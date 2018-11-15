@@ -15,17 +15,114 @@ function formatDate(date) {
   var monthIndex = date.getMonth();
   var year = date.getFullYear();
 
-  return day + ' ' + monthNames[monthIndex] + ' ' + year;
+  return monthNames[monthIndex] + ' ' + day +  ', ' + year;
+}
+
+function addCategoryNameToPane(name) {
+  return '<h3>' + name + '</h3>';
+}
+
+function categoryPaneTemplate(categoryPaneId, name, uuid) {
+  var pane = '<div role="tabpanel" class="tab-pane fade" id="' + categoryPaneId + '"></div>';
+  return pane;
+}
+
+function categoryTableTemplate(categoryPaneId, uuid) {
+  var pane = "";
+
+  pane += '<table class="blueTable">';
+  pane += '<thead id="audits-table-head">';
+  pane += '<tr>';
+  pane += '<th width="550px">Indicator</i></th>';
+  pane += '<th>Score</th>';
+  pane += '<th>Images</th>';
+  pane += '<th>Notes</th>';
+  pane += '</tr>';
+  pane +- '</thead>';
+  pane += '<tbody id="audits-table-' + uuid + '">';
+  pane += '<tr id="audits-table-first-row-' + uuid + '">';
+  pane += fillCategoryPaneFirstRow(categoryPaneId, uuid);
+  pane += '</tr>';
+  pane += '</tbody>';
+  pane += '</table>';
+
+  return pane;
+}
+
+function fillIndicatorRow(indicatorName) {
+  var row = "";
+  row  =  '<tr>';
+  row += '<td>' + indicatorName + '<button class="audit-question-images"><figure class="showhide"><img src="images/sink.png" alt="" /></figure><i class="fa fa-photo"></i></button></td>';
+  row += '<td>';
+  row += '<div class="select-style">';
+  row += '<select>';
+  row += '<option value="0">Yes</option>';
+  row += '<option value="1">No</option>';
+  row += '<option selected value="2">N/A</option>';
+  row += '</select>';
+  row += '</div>';
+  row += '</td>';
+  row += '<td class="images">';
+  row += '<button class="audit-images">';
+  row += '<figure class="showhide">';
+  row += '<img alt="" src="images/sink.png" />';
+  row += '</figure><i class="fa fa-photo fa-2x"></i>';
+  row += '</button>';
+  row += '</td>';
+  row += '<td class="notes">';
+  row += '<button class="audit-note"><i class="fa fa-edit fa-2x"></i></button>';
+  row += '</td>';
+  row += '</tr>';
+
+  return row;
+}
+
+function fillCategoryPaneFirstRow(categoryPaneId, uuid) {
+  var row = "";
+
+  row = '<td></td>';
+  row += '<td><div class="select-style">';
+  row += '<select>';
+  row += '<option selected value="0">All Yes</option>';
+  row += '<option value="1">All No</option>';
+  row += '<option value="2">All N/A</option>';
+  row += '<option value="2">All N/O</option>';
+  row += '</select>';
+  row += '</div></td>';
+  row += '<td></td>';
+  row += '<td></td>';
+
+  return row;
+}
+
+function addAuditTab(categoryPaneId, name) {
+  var tab = "";
+
+  tab = '<li id="section-audits-area" role="presentation">';
+  tab += '<a href="#' + categoryPaneId + '" aria-controls="section-audits-area" role="tab" data-toggle="tab">' + name.substring(0, 7) + ' ...</a>';
+  tab += '</li>';
+
+  return tab;
 }
 
 function loadAuditTabs(data) {
-  var tabs = "";
 
-  tabs = '<li id="section-audits-area" role="presentation">';
-  tabs += '<a href="#audits-area-pane" aria-controls="section-audits-area" role="tab" data-toggle="tab">Area</a>';
-  tabs += '</li>';
-
-  $("#audits-tabs > ul ").append(tabs);
+  for (var category in data.attributes['categories']) {
+    if (data.attributes['categories'][category].parent == "#") {
+      $("#audits-tabs > ul ").append(addAuditTab('audits-category-pane-category-' + data.attributes['categories'][category].uuid, data.attributes['categories'][category].text));
+      $("#audits-tabs > div.tab-content").append(categoryPaneTemplate("audits-category-pane-category-" + data.attributes['categories'][category].uuid));
+      $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].uuid).append(addCategoryNameToPane(data.attributes['categories'][category].text));
+      $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].uuid).append(categoryTableTemplate("audits-category-pane-category-" + data.attributes['categories'][category].uuid, data.attributes['categories'][category].uuid));
+    } else {
+      $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].parent).append(addCategoryNameToPane(data.attributes['categories'][category].text));
+      $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].parent).append(categoryTableTemplate("audits-category-pane-category-" + data.attributes['categories'][category].uuid, data.attributes['categories'][category].uuid));
+    }
+  }
+  for (var indicator in data.attributes['indicators']) {
+    if (data.attributes['indicators'][indicator].parent != "#")  {
+      $("#" + "audits-table-" + data.attributes['indicators'][indicator].parent).append(fillIndicatorRow(data.attributes['indicators'][indicator].text));
+    }
+  }
 }
 
 function loadAuditTable(data) {
@@ -36,6 +133,7 @@ function loadAuditTable(data) {
       rows  = '<tr>';
       rows += '<td>' + data[item].attributes['name'] + '</td>';
       rows += '<td>' + data[item].attributes['area'].name + '</td>';
+      rows += '<td>95%</td>';
       rows += '<td>' + data[item].attributes['template'].name + '</td>';
       rows += '<td>' + formatDate(new Date(data[item].attributes['created'])); + '</td>';
       rows += '</tr>';
@@ -145,11 +243,7 @@ function getAuditDetail(auditId) {
 }
 
 function getAuditDetailSuccess(response) {
-  var data = {};
-  data = response.data;
-  console.log(data);
-  loadAuditTabs(data);
-
+  loadAuditTabs(response.data);
 }
 
 function getAuditDetailFailure(response) {
