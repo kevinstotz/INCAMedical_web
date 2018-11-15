@@ -19,7 +19,7 @@ function formatDate(date) {
 }
 
 function addCategoryNameToPane(name) {
-  return '<h3>' + name + '</h3>';
+  return '<br /><h3>' + name + '</h3>';
 }
 
 function categoryPaneTemplate(categoryPaneId, name, uuid) {
