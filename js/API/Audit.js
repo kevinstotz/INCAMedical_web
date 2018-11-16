@@ -18,8 +18,8 @@ function formatDate(date) {
   return monthNames[monthIndex] + ' ' + day +  ', ' + year;
 }
 
-function addCategoryNameToPane(name) {
-  return '<br /><h3>' + name + '</h3>';
+function addCategoryNameToPane(name, categoryUuid) {
+  return '<br /><h3>' + name + '</h3><div id="audits-category-pane-div-' + categoryUuid + '"></div>';
 }
 
 function categoryPaneTemplate(categoryUuid) {
@@ -145,20 +145,22 @@ function addAuditTab(categoryUuid, name) {
 function loadAuditTabs(data) {
 
   for (var category in data.attributes['categories']) {
-
     if (data.attributes['categories'][category].parent == "#") {
       $("#audits-tabs > ul ").append(addAuditTab(data.attributes['categories'][category].uuid, data.attributes['categories'][category].text));
       $("#audits-tabs > div.tab-content").append(categoryPaneTemplate(data.attributes['categories'][category].uuid));
-      $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].uuid).append(addCategoryNameToPane(data.attributes['categories'][category].text));
-      $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].uuid).append(categoryTableTemplate(data.attributes['categories'][category].uuid));
+      $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].uuid).append(addCategoryNameToPane(data.attributes['categories'][category].text, data.attributes['categories'][category].uuid));
+      //$("#" + "audits-category-pane-category-" + data.attributes['categories'][category].uuid).append(categoryTableTemplate(data.attributes['categories'][category].uuid));
     } else {
-      $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].parent).append(addCategoryNameToPane(data.attributes['categories'][category].text));
-      $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].parent).append(categoryTableTemplate(data.attributes['categories'][category].uuid));
+      $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].parent).append(addCategoryNameToPane(data.attributes['categories'][category].text, data.attributes['categories'][category].uuid));
+      //$("#" + "audits-category-pane-category-" + data.attributes['categories'][category].parent).append(categoryTableTemplate(data.attributes['categories'][category].uuid));
     }
   }
 
   for (var indicator in data.attributes['indicators']) {
     if (data.attributes['indicators'][indicator].parent != "#")  {
+      if ( $("#" + "audits-table-" + data.attributes['indicators'][indicator].parent).length == 0 ) {
+        $("#" + "audits-category-pane-div-" + data.attributes['indicators'][indicator].parent).append(categoryTableTemplate(data.attributes['indicators'][indicator].parent));
+      }
       $("#" + "audits-table-" + data.attributes['indicators'][indicator].parent).append(fillIndicatorRow(data.attributes['indicators'][indicator]));
     }
   }
