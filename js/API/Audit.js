@@ -142,7 +142,6 @@ function addAuditTab(categoryPaneId, name) {
 }
 
 function loadAuditTabs(data) {
-  console.log(data);
 
   for (var category in data.attributes['categories']) {
     if (data.attributes['categories'][category].parent == "#") {
@@ -162,19 +161,21 @@ function loadAuditTabs(data) {
     }
   }
 
-  $(".audit-note").click(function() {
-    console.log("mpte");
+  $(".audit-note").click(function(event) {
+    event.preventDefault();
     $('#modal1').modal({
         show: true,
         backdrop: false
     });
   });
 
-  $("button.audit-images").click(function() {
+  $("button.audit-images").click(function(event) {
+      event.preventDefault();
       $(this).children("figure").toggleClass("showhide");
   });
 
-  $("button.audit-question-images").click(function() {
+  $("button.audit-question-images").click(function(event) {
+    event.preventDefault();
     $(this).children("figure").toggleClass("showhide");
   });
 
