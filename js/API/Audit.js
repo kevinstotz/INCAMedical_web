@@ -55,7 +55,7 @@ function addIndicator(indicator) {
   row = '<td>';
   row += indicator.text;
   for (var image in indicator['images']) {
-    row += '<button class="audit-question-images" value=><figure class="showhide"><img src="' + indicator['images'][image].path + '" alt="' + indicator['images'][image].name + '" /></figure><i class="fa fa-photo"></i></button>';
+    row += '<button class="audit-question-images" value=><figure class="showhide"><img src="' + indicator['images'][image].path + '" alt="' + indicator['images'][image].name + '" /></figure><i class="fas fa-file-image"></i></button>';
   }
   row += '</td>';
 
@@ -80,12 +80,13 @@ function addIndicatorOptions(indicator) {
 
 function addIndicatorImage(indicator) {
   var row = "";
-  row += '<td class="images">';
-  row += '<button type="button" class="" data-toggle="modal" data-target="#uploadModal"><img width="20px" src="/static/assets/images/upload.png"  alt="upload" /></button>';
+  
+  row += '<td class="">';
+  row += '<button type="button" class="audit-images" data-toggle="modal" data-target="#uploadModal"><i class="fas fa-file-upload fa-2x"></i></button>';
   row += '<button class="audit-images">';
   row += '<figure class="showhide">';
-  row += '<img alt="" src="/static/assets/images/indicator/sink.png" />';
-  row += '</figure><i class="fa fa-photo fa-2x"></i>';
+  row += '<img alt="image" src="/static/assets/images/indicator/sink.png" />';
+  row += '</figure><i class="fas fa-file-image fa-2x"></i>';
   row += '</button>';
   row += '</td>';
 
@@ -96,7 +97,7 @@ function addIndicatorNote(indicator) {
   var row = "";
 
   row += '<td class="notes">';
-  row += '<button class="audit-note"><i class="fa fa-edit fa-2x"></i></button>';
+  row += '<button class="audit-note"><i class="fas fa-sticky-note fa-2x"></i></button>';
   row += '</td>';
 
   return row;

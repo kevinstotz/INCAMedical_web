@@ -258,10 +258,6 @@ function registerSettingsTemplateEvents() {
 
 }
 
-function registerTableHeadEvents() {}
-function registerTableFirstRowEvents() {}
-function registerTableRemainingRowEvents() {}
-
 function isInSession(variable) {
   if ( (sessionStorage.getItem(variable) === null) ||
        (sessionStorage.getItem(variable) == 0) ||
