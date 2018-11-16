@@ -22,16 +22,16 @@ function addCategoryNameToPane(name) {
   return '<br /><h3>' + name + '</h3>';
 }
 
-function categoryPaneTemplate(categoryPaneId, name, uuid) {
-  var pane = '<div role="tabpanel" class="tab-pane fade" id="' + categoryPaneId + '"></div>';
+function categoryPaneTemplate(categoryUuid) {
+  var pane = '<div role="tabpanel" class="tab-pane fade" id="audits-category-pane-category-' + categoryUuid + '"></div>';
   return pane;
 }
 
-function categoryTableTemplate(categoryPaneId, uuid) {
+function categoryTableTemplate(uuid) {
   var pane = "";
   pane += '<form  id="audits-table-form-' + uuid + '" class="form input-group-md">';
   pane += '<table class="blueTable">';
-  pane += '<thead id="audits-table-head">';
+  pane += '<thead id="audits-table-head-' + uuid + '">';
   pane += '<tr>';
   pane += '<th width="550px">Indicator</i></th>';
   pane += '<th>Score</th>';
@@ -41,7 +41,7 @@ function categoryTableTemplate(categoryPaneId, uuid) {
   pane +- '</thead>';
   pane += '<tbody id="audits-table-' + uuid + '">';
   pane += '<tr id="audits-table-first-row-' + uuid + '">';
-  pane += fillCategoryPaneFirstRow(categoryPaneId, uuid);
+  pane += fillCategoryPaneFirstRow(uuid);
   pane += '</tr>';
   pane += '</tbody>';
   pane += '</table>';
@@ -116,12 +116,12 @@ function fillIndicatorRow(indicator) {
   return row;
 }
 
-function fillCategoryPaneFirstRow(categoryPaneId, uuid) {
+function fillCategoryPaneFirstRow(uuid) {
   var row = "";
 
   row = '<td></td>';
   row += '<td><div class="select-style">';
-  row += '<select id="select-all" name="' + uuid + '">';
+  row += '<select class="select-all" id="select-all-' + uuid + '" name="' + uuid + '">';
   row += '<option selected value="8">All Pass</option>';
   row += '<option value="9">All Fail</option>';
   row += '</select>';
@@ -132,11 +132,11 @@ function fillCategoryPaneFirstRow(categoryPaneId, uuid) {
   return row;
 }
 
-function addAuditTab(categoryPaneId, name) {
+function addAuditTab(categoryUuid, name) {
   var tab = "";
 
-  tab = '<li id="section-audits-area" role="presentation">';
-  tab += '<a href="#' + categoryPaneId + '" aria-controls="section-audits-area" role="tab" data-toggle="tab">' + name.substring(0, 10) + ' ...</a>';
+  tab = '<li id="section-audits-category-' + categoryUuid + '" role="presentation">';
+  tab += '<a href="#audits-category-pane-category-' + categoryUuid + '" aria-controls="section-audits-category-' + categoryUuid + '" role="tab" data-toggle="tab">' + name.substring(0, 10) + ' ...</a>';
   tab += '</li>';
 
   return tab;
@@ -145,14 +145,15 @@ function addAuditTab(categoryPaneId, name) {
 function loadAuditTabs(data) {
 
   for (var category in data.attributes['categories']) {
+
     if (data.attributes['categories'][category].parent == "#") {
-      $("#audits-tabs > ul ").append(addAuditTab('audits-category-pane-category-' + data.attributes['categories'][category].uuid, data.attributes['categories'][category].text));
-      $("#audits-tabs > div.tab-content").append(categoryPaneTemplate("audits-category-pane-category-" + data.attributes['categories'][category].uuid));
+      $("#audits-tabs > ul ").append(addAuditTab(data.attributes['categories'][category].uuid, data.attributes['categories'][category].text));
+      $("#audits-tabs > div.tab-content").append(categoryPaneTemplate(data.attributes['categories'][category].uuid));
       $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].uuid).append(addCategoryNameToPane(data.attributes['categories'][category].text));
-      $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].uuid).append(categoryTableTemplate("audits-category-pane-category-" + data.attributes['categories'][category].uuid, data.attributes['categories'][category].uuid));
+      $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].uuid).append(categoryTableTemplate(data.attributes['categories'][category].uuid));
     } else {
       $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].parent).append(addCategoryNameToPane(data.attributes['categories'][category].text));
-      $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].parent).append(categoryTableTemplate("audits-category-pane-category-" + data.attributes['categories'][category].uuid, data.attributes['categories'][category].uuid));
+      $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].parent).append(categoryTableTemplate(data.attributes['categories'][category].uuid));
     }
   }
 
@@ -180,7 +181,7 @@ function loadAuditTabs(data) {
     $(this).children("figure").toggleClass("showhide");
   });
 
-  $("#select-all").change(function() {
+  $("select.select-all").change(function() {
       var value = $(this).val();
       var $formId = $(this).attr("name");
       $('#audits-table-form-' + $formId + ' select').each(
@@ -192,7 +193,6 @@ function loadAuditTabs(data) {
 }
 
 function loadAuditTable(data) {
-  console.log(data);
   var auditId = sessionStorage.getItem('auditId');
   var rows = "";
 
@@ -300,7 +300,6 @@ function getAuditDetail(auditId) {
 }
 
 function getAuditDetailSuccess(response) {
-  console.log(response.data);
   loadAuditTabs(response.data);
 }
 
