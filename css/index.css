@@ -27,6 +27,7 @@ a:hover,a:focus{
 .vertical-tab .nav-tabs li{
    float: left;
    vertical-align: top;
+   width: 100%;
 }
 
 .vertical-tab .nav-tabs li a{

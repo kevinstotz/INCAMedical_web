@@ -163,18 +163,20 @@ function loadAuditTabs(data) {
   }
 
   $(".audit-note").click(function() {
-    console.log("mpte");
+    event.preventDefault();
     $('#modal1').modal({
         show: true,
         backdrop: false
     });
   });
 
-  $("button.audit-images").click(function() {
+  $("button.audit-images").click(function(event) {
+      event.preventDefault();
       $(this).children("figure").toggleClass("showhide");
   });
 
   $("button.audit-question-images").click(function() {
+    event.preventDefault();
     $(this).children("figure").toggleClass("showhide");
   });
 
