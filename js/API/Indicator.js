@@ -39,7 +39,7 @@ function loadIndicatorTable(data) {
 
   $.each(data, function(i, item) {
       rows += '<tr>';
-      rows += '<td>' + item.attributes.short_name + '</td>';
+      // rows += '<td>' + item.attributes.short_name + '</td>';
       rows += '<td>' + item.attributes.name + '</td>';
       rows += '<td><select class="form-control" id="settings-indicator-table-type-select-' + item.id + '">';
       for (var indicator_type in INDICATOR_TYPE_LIST) {
@@ -58,7 +58,7 @@ function loadIndicatorTable(data) {
         selected = "";
       }
       rows += '</select></td>';
-      rows += '<td><div class="form-control"><input type="checkbox" value="' + item.id + '" id="settings-category-sort-select-' + item.id + '"' + ( ( 1 == item.attributes.active ) ? " checked ": "") + ' name="horns"></div></td>';
+      rows += '<td><input  class="form-control" type="checkbox" value="' + item.id + '" id="settings-category-sort-select-' + item.id + '"' + ( ( 1 == item.attributes.active ) ? " checked ": "") + ' name="horns"></td>';
       rows += '</tr>';
       disabled = " ";
   });

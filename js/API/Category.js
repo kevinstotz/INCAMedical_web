@@ -26,13 +26,11 @@ function loadCategorySelect(data) {
 function loadCategoryTable(data) {
   var options = "";
   $.each(data, function(i, item) {
-      options += '<tr>' + '<td>' + item.attributes.short_name + '</td>';
-
+      options += '<tr>';
+      //options += '<td>' + item.attributes.short_name + '</td>';
       options += '<td>' + item.attributes.name + '</td>';
-
-      options += '<td><div class="">';
-      options += '<input type="checkbox" id="settings-category-table-active-' + item.id + '"' + ( ( 1 == item.attributes.active ) ? " checked ": "" ) + ' name="horns"> ';
-      options += '</div> </td> </tr>';
+      options += '<td><input class="form-control" type="checkbox" id="settings-category-table-active-' + item.id + '"' + ( ( 1 == item.attributes.active ) ? " checked ": "" ) + ' name="horns"></td>';
+      options += '</tr>';
   });
 
   $( "#settings-category-table > tbody" ).empty().append(options);

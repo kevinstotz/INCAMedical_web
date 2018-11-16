@@ -1,0 +1,7 @@
+// config/prod.json
+{
+  "api_port": 80,
+  "api_endpoint": "api.incamedical.com",
+  "web_port": 80,
+  "web_endpoint": "www.incamedical.com"
+}

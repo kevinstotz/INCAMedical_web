@@ -80,7 +80,7 @@ function addIndicatorOptions(indicator) {
 
 function addIndicatorImage(indicator) {
   var row = "";
-  
+
   row += '<td class="">';
   row += '<button type="button" class="audit-images" data-toggle="modal" data-target="#uploadModal"><i class="fas fa-file-upload fa-2x"></i></button>';
   row += '<button class="audit-images">';
@@ -192,6 +192,7 @@ function loadAuditTabs(data) {
 }
 
 function loadAuditTable(data) {
+  console.log(data);
   var auditId = sessionStorage.getItem('auditId');
   var rows = "";
 
@@ -205,16 +206,6 @@ function loadAuditTable(data) {
       rows += '</tr>';
   }
   $( "#audits-audits-table-tbody" ).append(rows);
-
-  if (auditId == 0) {
-    //$( "#update-audit-button" ).hide();
-    //$( "#create-audit-button" ).show();
-  } else {
-    //$( "#update-audit-button" ).show();
-    //$( "#create-audit-button" ).hide();
-  }
-
-  //$( "#audits-audit-select" ).find('option').remove().end().append(options)
 }
 
 
@@ -309,6 +300,7 @@ function getAuditDetail(auditId) {
 }
 
 function getAuditDetailSuccess(response) {
+  console.log(response.data);
   loadAuditTabs(response.data);
 }
 
