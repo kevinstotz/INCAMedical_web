@@ -7,7 +7,10 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="dist/jstree/themes/default/style.min.css" />
         <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/audits/audit.css">
+        <link rel="stylesheet" type="text/css" href="css/settings/template.css">
         <link rel="stylesheet" type="text/css" href="css/settings/indicator.css">
+        <link rel="stylesheet" type="text/css" href="css/settings/category.css">
         <link rel="stylesheet" type="text/css" href="css/form-field.css">
         <link rel="stylesheet" type="text/css" href="css/header.css">
         <link rel="stylesheet" type="text/css" href="css/button.css">
@@ -18,18 +21,19 @@
         <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script src="js/utils/register.js"></script>
-        
+
         <script>$(function(){ $("#header").load("includes/header.html", function() {
                       registerHeaderEvents();
                     }); });</script>
         <script>$(function(){ $("#footer").load("includes/footer.html", function() {
                       registerFooterEvents();
                     }); });</script>
-        <script>$(function(){ $("#audits-audits-pane").load("includes/audits/audits/audit.html", function() {
+        <script>$(function(){ $("#audits-audits-pane").load("includes/audits/audit/audit.html", function() {
                       registerAuditsAuditsEvents();
                     }); });</script>
-        <script>$(function(){ $("#notebody").load("includes/audits/audits-note-modal.html"); });</script>
-        <script>$(function(){ $("#imagebody").load("includes/audits/audits-image-modal.html"); });</script>
+        <script>$(function(){ $("#notebody").load("includes/audits/audit/note-modal.html"); });</script>
+        <script>$(function(){ $("#audit-image-upload").load("includes/audits/audit/image-upload-modal.html"); });</script>
+        <script>$(function(){ $("#imagebody").load("includes/settings/settings-indicator-image-upload-modal.html"); });</script>
         <script>$(function(){ $("#reports-report-pane").load("includes/reports/reports-report.html", function() {
                       registerReportsReportEvents();
                     }); });</script>
@@ -52,6 +56,7 @@
         <script src="js/utils/utils.js"></script>
         <script src="dist/jstree/jstree.js"></script>
         <script src="js/API.js"></script>
+        <script src="js/API/Note.js"></script>
         <script src="js/API/Audit.js"></script>
         <script src="js/API/AuditArea.js"></script>
         <script src="js/API/IndicatorType.js"></script>
@@ -122,6 +127,8 @@
       <footer id="footer" class="footer"></footer>
       <div id="notebody"></div>
       <div id="imagebody"></div>
+      <div id="audit-image-upload"></div>
+      <div id="settings-indicator-image-upload"></div>
       <script src="js/app.js"></script>
     </body>
 </html>

@@ -1,39 +1,46 @@
 
-function loadCategorySelect(data) {
-  var options = '<option value="0">Add New Category</option>';
-  var activeCategoryId = sessionStorage.getItem('categoryId');
-  var selected = "";
-
-  for (var item in data) {
-      if (activeCategoryId == data[item].id) { selected = "selected";}
-      options += '<option ' + selected + ' value=' + data[item].id + '>' + textLength(data[item].attributes.name, 30) + '</option>';
-      selected = "";
-  }
-
-  if (activeCategoryId == 0) {
-    $( "#update-category-button" ).hide();
-    $( "#create-category-button" ).show();
-    //$( "#delete-category-button" ).attr('disabled', true);
-  } else {
-    //$( "#delete-category-button" ).attr('disabled', false);
-    $( "#update-category-button" ).show();
-    $( "#create-category-button" ).hide();
-  }
-
-  $( "#settings-category-select" ).find('option').remove().end().append(options);
-}
-
 function loadCategoryTable(data) {
-  var options = "";
+  var row = "";
+
+  row += '<tr>';
+  row += '<td><input placeholder="Add new Category" class="" size="73" type="text" id="settings-category-form-input-name" name="add" value="" />';
+  row += '<button class="add-category" value="0"><i class="fas fa-plus "></i></button></td>';
+  row += '<td colspan="2"></td>';
+  row += '</tr>';
+
   $.each(data, function(i, item) {
-      options += '<tr>';
-      //options += '<td>' + item.attributes.short_name + '</td>';
-      options += '<td>' + item.attributes.name + '</td>';
-      options += '<td><input class="form-control" type="checkbox" id="settings-category-table-active-' + item.id + '"' + ( ( 1 == item.attributes.active ) ? " checked ": "" ) + ' name="horns"></td>';
-      options += '</tr>';
+      row += '<tr id="category=' + item.id + '">';
+      row += '<td>' + item.attributes.name + '</td>';
+      row += '<td><button class="active-category" value="' + item.id + '" name="active"><i class="fas ' + ( ( 1 == item.attributes.active ) ? " fa-toggle-on ": " fa-toggle-off " ) + ' fa-2x"></i></button></td>';
+      row += '<td><button class="delete-category" value="' + item.id + '"><i class="fas fa-trash fa-2x"></i></button></td>';
+      row += '</tr>';
   });
 
-  $( "#settings-category-table > tbody" ).empty().append(options);
+  $( "#settings-category-table > tbody" ).empty().append(row);
+
+  $( "button.delete-category" ).click(function(event) {
+      event.preventDefault();
+      var value = $(this).val();
+      deleteCategory(value);
+  });
+
+  $( "button.add-category" ).click(function(event) {
+      event.preventDefault();
+      var value = $("#settings-category-form-input-name").val();
+      createCategory(value);
+  });
+
+  $( "button.active-category" ).click(function(event) {
+      event.preventDefault();
+      var active = false;
+      var categoryId = $(this).val();
+
+      $(this).find("i").toggleClass("fa-toggle-on fa-toggle-off");
+      if ( $(this).find("i").hasClass("fa-toggle-on") ) {
+        active = true;
+      }
+      updateCategory( { "id": categoryId, "active": active } );
+  });
 }
 //---------------------------------------------------//
 // Get Category List button functions
@@ -42,15 +49,14 @@ function getCategoryList(companyId) {
   if (companyId > 0) {
     API_GET(API_ENDPOINT + API_CATEGORY + "?company=" + companyId, "", getCategoryListSuccess, getCategoryListFailure, "text");
   } else {
-    loadCategorySelect([]);
     loadCategoryTable([]);
+
   }
 }
 
 function getCategoryListSuccess(response) {
   var categoryId = sessionStorage.getItem('categoryId');
 
-  loadCategorySelect(parseResponse(response));
   loadCategoryTable(parseResponse(response));
   if ( categoryId > 0 ) {
     getCategoryDetail(categoryId);
@@ -59,7 +65,6 @@ function getCategoryListSuccess(response) {
 
 function getCategoryListFailure(response) {
   sessionStorage.setItem("categoryId", 0);
-  loadCategorySelect([]);
 }
 
 
@@ -70,22 +75,10 @@ function getCategoryDetail(categoryId) {
 function getCategoryDetailSuccess(response) {
   var data = {};
   data = parseResponse(response);
-  $('#settings-category-select-form :input').each(function() {
-    var $el = $(this)[0];
-    switch($el.name) {
-        case 'name':
-            $(this).val(data.attributes['name']);
-            sessionStorage.setItem('categoryId', data.id);
-            break;
-        default:
-            break;
-    }
-  });
 }
 
 function getCategoryDetailFailure(response) {
   console.log(response);
-  loadCategorySelect(parseResponse(response));
 }
 //---------------------------------------------------//
 
@@ -93,12 +86,11 @@ function getCategoryDetailFailure(response) {
 // Delete category button functions
 function deleteCategory(categoryId) {
   API_DELETE(API_ENDPOINT + API_CATEGORY, categoryId + "/", deleteCategorySuccess, deleteCategoryFailure, "json");
+  $('table#settings-category-table tr#category=' + categoryId).remove();
 }
 
 function deleteCategorySuccess(response) {
-  $("#settings-category-select-form")[0].reset();
-  sessionStorage.setItem("categoryId", 0);
-  getCategoryList(sessionStorage.getItem("companyId"));
+
 }
 
 function deleteCategoryFailure(response) {
@@ -109,8 +101,8 @@ function deleteCategoryFailure(response) {
 //---------------------------------------------------//
 // Update category button functions
 function updateCategory(data) {
-  category = { "id": sessionStorage.getItem("categoryId"), "name": data.name };
-  API_UPDATE(API_ENDPOINT + API_CATEGORY + sessionStorage.getItem("categoryId")  + "/", category, updateCategorySuccess, updateCategoryFailure, "json");
+  var category = { "id": data.id, "active": data.active };
+  API_UPDATE(API_ENDPOINT + API_CATEGORY + data.id  + "/", category, updateCategorySuccess, updateCategoryFailure, "json");
 }
 
 function updateCategorySuccess(response) {
@@ -125,8 +117,8 @@ function updateCategoryFailure(response) {
 //---------------------------------------------------//
 // Create Category button functions
 
-function createCategory(companyId, data) {
-  var category = { "name": data.name, "company": companyId };
+function createCategory(name) {
+  var category = { "name": name, "company": sessionStorage.getItem("companyId") };
   API_POST(API_ENDPOINT + API_CATEGORY, category, createCategorySuccess, createCategoryFailure, "json");
 }
 

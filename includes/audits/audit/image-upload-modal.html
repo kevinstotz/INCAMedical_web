@@ -1,0 +1,26 @@
+<!-- Modal -->
+<div id="audit-indicator-image-upload-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Upload Image</h4>
+      </div>
+      <div class="modal-body">
+        <!-- Form -->
+        <form action="javascript:;" accept-charset="utf-8" method="post" id="audit-indicator-image-upload-form" name="audit-indicator-image-upload-form-name" enctype="multipart/form-data">
+          Select Image : <input type='file' name='fileToUpload' id='file' class='form-control' ><br>
+          <input type="hidden" name="id" id="id" value=""/>
+          <input type='button' class='btn btn-info' value='Upload' name="audit-indicator-image-upload-form-button-name" id='audit-indicator-image-upload-form-button'>
+        </form>
+
+        <!-- Preview-->
+        <div id='audit-indicator-image-upload-preview'></div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

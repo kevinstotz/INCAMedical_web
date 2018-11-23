@@ -1,26 +1,13 @@
 <div class="">
-  <div class="settings-indicator-section-1">
-    <h3>Indicators' Categories</h3>
-    <form id="settings-category-select-form" class="form input-group-md">
-        <label for="settings-category-select"></label>
-        <select class="form-control category-dropdown-select select-option-style" id="settings-category-select">
-            <option class="select-option-style" value="0">Add New Category</option>
-        </select>
-        <label for="settings-category-select-form-input-name">Name</label>
-        <input class="form-control" type="text" size="30" id="settings-category-select-form-input-name" name="name" value="">
-        <input id="delete-category-button" type="submit" class="myButton pull-left" value="Delete" />
-        <input id="update-category-button" type="submit" class="myButton pull-right" value="Update" />
-        <input id="create-category-button" type="submit" class="myButton pull-right" value="Add"/>
-    </form>
-  </div>
-  <div class="settings-indicator-section-2">
+  <div class="settings-category-section-1">
     <h3>Categories</h3>
     <form id="settings-category-table-form" class="form input-group-md">
       <table class="blueTable" id="settings-category-table">
           <thead id="settings-category-table-head">
             <tr>
-              <th width="100%">Category</th>
+              <th style="width:100%">Category</th>
               <th>Active</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>

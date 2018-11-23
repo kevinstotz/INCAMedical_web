@@ -1,0 +1,27 @@
+.audit-indicator-images {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+.audit-indicator-modal {
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  text-align: center;
+}
+
+.audit-indicator-images img {
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  position: absolute;
+  max-width: 400px;
+  height: auto;
+}
+.audit-indicator-upload {
+  text-align: center;
+}

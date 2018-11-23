@@ -1,12 +1,16 @@
 function emptyTemplateCategoryTree() {
   $('#jstree_category_assignment').empty().jstree('destroy');
+  $('#jstree_category_assignment').hide();
+  $('.category-indicator-tree-spinner').show();
 }
 
 function loadTemplateCategoryTree(data) {
+  $('#jstree_category_assignment').hide();
+  $('.category-indicator-tree-spinner').show();
   var tree = [];
 
   for (var item in data) {
-    var node = { "id" : "", "parent" : "", "text" : "" , "type" : "category",} ;
+    var node = { "id" : "", "parent" : "", "text" : "", "type" : "category" };
     node.id = data[item].attributes.uuid;
     node.parent = data[item].attributes.parent;
     node.text = data[item].attributes.text;

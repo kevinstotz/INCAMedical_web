@@ -1,7 +1,35 @@
 .settings-indicator-section-1 {
-  width:400px;
+  width: 900px;
 }
-.settings-indicator-section-2 {
-  width: 100%;
-  margin-top: 100px;
+
+.active-indicator {
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+}
+.delete-indicator {
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+}
+.image-indicator {
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+}
+
+.uploaded-indicator-images {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+
+.uploaded-indicator-images img {
+  position: absolute;
+  max-width: 400px;
+  height: auto;
 }

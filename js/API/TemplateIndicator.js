@@ -9,9 +9,12 @@ function loadTemplateIndicatorTree(data) {
     node.text = data[item].attributes.text;
     tree.push(node);
   }
+
   Array.prototype.push.apply(tree,$('#jstree_category_assignment').jstree(true).settings.core.data);
   $('#jstree_category_assignment').jstree(true).settings.core.data = tree;
   $('#jstree_category_assignment').jstree(true).refresh();
+  $('#jstree_category_assignment').show();
+  $('.category-indicator-tree-spinner').hide();
 
 }
 

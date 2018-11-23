@@ -1,20 +1,20 @@
 <!-- Modal 1 -->
-<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1Label" aria-hidden="true">
+<div class="modal fade" id="note-modal" tabindex="-1" role="dialog" aria-labelledby="note-modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-left">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                 <h4 class="modal-title" id="modal1Label">Notes</h4>
+                 <h4 class="modal-title" id="note-modalLabel">Notes</h4>
             </div>
             <div class="modal-body">
-                <div class="form-popup" id="myForm">
-                    <form action="#" class="form-container">
-                        <textarea rows="10" cols="78" ></textarea>
+                <div class="form-popup">
+                    <form id="note-form" action="#" class="form-container">
+                        <textarea name="note" rows="10" cols="78"></textarea>
                     </form>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-default">Add</button>
+                <button type="submit" class="btn btn-default note-modal-add">Add</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
             </div>
         </div>
