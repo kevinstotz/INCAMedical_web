@@ -15,6 +15,9 @@ const API_INDICATOR_TYPE = '/indicator-type/';
 const API_INDICATOR_OPTION = '/indicator-option/';
 const API_SPECIALTY_TYPE = '/specialty-type/';
 const API_TEMPLATE = '/template/';
+const API_UPLOAD = '/image-upload/';
+const API_AUDIT_IMAGE_UPLOAD = '/audit-image-upload/'
+const API_NOTE_CREATE = '/note/';
 const API_TEMPLATE_CREATE = '/template/create/';
 const API_TEMPLATE_CATEGORY = '/template-category/';
 const API_TEMPLATE_INDICATOR = '/template-indicator/';
@@ -58,6 +61,31 @@ function API_UPDATE(url, data, success, error, dataType) {
       'Content-Type': 'application/json'
     },
     success: success,
+    error: error,
+    dataType: dataType
+  });
+  return 0;
+}
+
+function API_UPLOAD_IMAGE(url, data, success, error, dataType, params) {
+  $.ajax({
+    type: "POST",
+    url: url,
+    timeout: 60000,
+    processData: false,
+    contentType: false,
+    enctype: 'multipart/form-data',
+    data: data,
+    cache: false,
+    xhrFields: {
+      withCredentials: false
+    },
+    headers: {
+      'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
+    //  'Accept': 'application/vnd.api+json',
+      //'enctype': 'multipart/form-data'
+    },
+    success: function(data) { success(data, params); },
     error: error,
     dataType: dataType
   });

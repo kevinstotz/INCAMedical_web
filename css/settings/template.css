@@ -1,0 +1,9 @@
+.category-indicator-tree-spinner {
+  background-image: url("/static/assets/images/spinner.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+  vertical-align: center;
+  width: 100%;
+  height: 400px;
+  display: none;
+}

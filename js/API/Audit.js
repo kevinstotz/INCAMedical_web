@@ -33,7 +33,7 @@ function categoryTableTemplate(uuid) {
   pane += '<table class="blueTable">';
   pane += '<thead id="audits-table-head-' + uuid + '">';
   pane += '<tr>';
-  pane += '<th width="550px">Indicator</i></th>';
+  pane += '<th style="width:550px">Indicator</i></th>';
   pane += '<th>Score</th>';
   pane += '<th>Images</th>';
   pane += '<th>Notes</th>';
@@ -49,27 +49,41 @@ function categoryTableTemplate(uuid) {
   return pane;
 }
 
-function addIndicator(indicator) {
+function insertAuditIndicatorImage(id, url) {
   var row = "";
 
-  row = '<td>';
+  row += '<button type="button" value="' + id + '" class="audit-indicator-images">';
+  row += '<img class="showhide" alt="image" src="' + url + '" />';
+  row += '<i class="fas fa-file-image"></i>';
+  row += '</button>';
+
+  return row;
+}
+
+function addAuditIndicatorName(indicator) {
+  var row = "";
+
+  row = '<td id="audit-indicator-' + indicator.id + '-name">';
   row += indicator.text;
   for (var image in indicator['images']) {
-    row += '<button class="audit-question-images" value=><figure class="showhide"><img src="' + indicator['images'][image].path + '" alt="' + indicator['images'][image].name + '" /></figure><i class="fas fa-file-image"></i></button>';
+    row += insertAuditIndicatorImage(indicator["images"][image].id, indicator["images"][image]["file_url"]);
   }
   row += '</td>';
 
   return row;
 }
 
-function addIndicatorOptions(indicator) {
+function addAuditIndicatorOptions(indicator) {
   var row = "";
+  var selected = "";
 
   row += '<td>';
   row += '<div class="select-style">';
-  row += '<select>';
+  row += '<select class="form-control audit-indicator-table-type-select" name="' + indicator.id + '" id="audit-indicator-table-type-select-' + indicator.id + '">';
   for (var option in indicator['options']) {
-    row += '<option value="' + indicator['options'][option].id + '">' + indicator['options'][option].option + '</option>';
+    if (indicator['indicator_option'] == indicator['options'][option].id) { selected = " selected "; }
+    row += '<option ' + selected + ' value="' + indicator['options'][option].id + '">' + indicator['options'][option].option + '</option>';
+    selected  = "";
   }
   row += '</select>';
   row += '</div>';
@@ -78,22 +92,42 @@ function addIndicatorOptions(indicator) {
   return row;
 }
 
-function addIndicatorImage(indicator) {
+function insertAuditImage(id, url) {
   var row = "";
 
-  row += '<td class="">';
-  row += '<button type="button" class="audit-images" data-toggle="modal" data-target="#uploadModal"><i class="fas fa-file-upload fa-2x"></i></button>';
-  row += '<button class="audit-images">';
-  row += '<figure class="showhide">';
-  row += '<img alt="image" src="/static/assets/images/indicator/sink.png" />';
-  row += '</figure><i class="fas fa-file-image fa-2x"></i>';
+  row += '<button type="button" value="' + id + '" class="uploaded-audit-images">';
+  row += '<img class="showhide" alt="image" src="' + url + '" />';
+  row += '<i class="fas fa-file-image"></i>';
   row += '</button>';
+
+  return row;
+}
+
+function insertAuditIndicatorUpload(upload) {
+  var row = "";
+
+  row += '<button class="audit-indicator-images">';
+  row += '<img class="showhide" alt="image" src="' + upload + '" />';
+  row += '<i class="fas fa-file-image fa-2x"></i>';
+  row += '</button>';
+
+  return row;
+}
+
+function addAuditIndicatorUploads(indicator) {
+  var row = "";
+
+  row += '<td class="audit-indicator-upload">';
+  row += '<button type="button" class="audit-indicator-modal" data-toggle="modal" value="' + indicator["id"] + '" data-target="#audit-indicator-image-upload-modal"><i class="fas fa-file-upload fa-2x"></i></button>';
+  for (var upload in indicator["uploads"]) {
+    row += insertAuditIndicatorUpload(indicator["uploads"][upload].upload);
+  }
   row += '</td>';
 
   return row;
 }
 
-function addIndicatorNote(indicator) {
+function addAuditIndicatorNote() {
   var row = "";
 
   row += '<td class="notes">';
@@ -103,14 +137,14 @@ function addIndicatorNote(indicator) {
   return row;
 }
 
-function fillIndicatorRow(indicator) {
+function fillAuditIndicatorRow(indicator) {
   var row = "";
 
-  row  = '<tr>';
-  row += addIndicator(indicator);
-  row += addIndicatorOptions(indicator);
-  row += addIndicatorImage(indicator);
-  row += addIndicatorNote(indicator);
+  row  = '<tr id="audit-indicator-' + indicator.id + '">';
+  row += addAuditIndicatorName(indicator);
+  row += addAuditIndicatorOptions(indicator);
+  row += addAuditIndicatorUploads(indicator);
+  row += addAuditIndicatorNote();
   row += '</tr>';
 
   return row;
@@ -121,7 +155,7 @@ function fillCategoryPaneFirstRow(uuid) {
 
   row = '<td></td>';
   row += '<td><div class="select-style">';
-  row += '<select class="select-all" id="select-all-' + uuid + '" name="' + uuid + '">';
+  row += '<select class="select-all" name="' + uuid + '">';
   row += '<option selected value="8">All Pass</option>';
   row += '<option value="9">All Fail</option>';
   row += '</select>';
@@ -149,10 +183,8 @@ function loadAuditTabs(data) {
       $("#audits-tabs > ul ").append(addAuditTab(data.attributes['categories'][category].uuid, data.attributes['categories'][category].text));
       $("#audits-tabs > div.tab-content").append(categoryPaneTemplate(data.attributes['categories'][category].uuid));
       $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].uuid).append(addCategoryNameToPane(data.attributes['categories'][category].text, data.attributes['categories'][category].uuid));
-      //$("#" + "audits-category-pane-category-" + data.attributes['categories'][category].uuid).append(categoryTableTemplate(data.attributes['categories'][category].uuid));
     } else {
       $("#" + "audits-category-pane-category-" + data.attributes['categories'][category].parent).append(addCategoryNameToPane(data.attributes['categories'][category].text, data.attributes['categories'][category].uuid));
-      //$("#" + "audits-category-pane-category-" + data.attributes['categories'][category].parent).append(categoryTableTemplate(data.attributes['categories'][category].uuid));
     }
   }
 
@@ -161,37 +193,98 @@ function loadAuditTabs(data) {
       if ( $("#" + "audits-table-" + data.attributes['indicators'][indicator].parent).length == 0 ) {
         $("#" + "audits-category-pane-div-" + data.attributes['indicators'][indicator].parent).append(categoryTableTemplate(data.attributes['indicators'][indicator].parent));
       }
-      $("#" + "audits-table-" + data.attributes['indicators'][indicator].parent).append(fillIndicatorRow(data.attributes['indicators'][indicator]));
+      $("#" + "audits-table-" + data.attributes['indicators'][indicator].parent).append(fillAuditIndicatorRow(data.attributes['indicators'][indicator]));
     }
   }
 
   $(".audit-note").click(function(event) {
     event.preventDefault();
-    $('#modal1').modal({
+    $('#note-modal').modal({
         show: true,
         backdrop: false
     });
   });
 
-  $("button.audit-images").click(function(event) {
-      event.preventDefault();
-      $(this).children("figure").toggleClass("showhide");
+  $("button.note-modal-add").click(function(event) {
+    event.preventDefault();
+    $('#note-form textarea').each(function() {
+      var $el = $(this)[0];
+      switch($el.name) {
+        case 'note':
+          var note = $(this).val();
+          createNote(note, 2, sessionStorage.getItem("companyId"));
+          break;
+        default:
+          break;
+      }
+    });
   });
 
-  $("button.audit-question-images").click(function(event) {
+  $("button.audit-indicator-modal").click(function() {
+    $( "input[type=hidden][name=id]" ).val($(this).attr("value"));
+  });
+
+  $("button.audit-indicator-images").click(function(event) {
     event.preventDefault();
-    $(this).children("figure").toggleClass("showhide");
+    $(this).children("img").toggleClass("showhide");
+  });
+
+  $("select.audit-indicator-table-type-select").change(function() {
+    var optionId = $(this).val();
+    var indicatorId = $(this).attr("name");
+    updateAuditTemplateIndicatorScore(optionId, indicatorId);
   });
 
   $("select.select-all").change(function() {
-      var value = $(this).val();
+      var optionId = $(this).val();
       var $formId = $(this).attr("name");
       $('#audits-table-form-' + $formId + ' select').each(
         function(index) {
-            $(this).val(value);
+          if (index > 0) {
+            $(this).val(optionId);
+            indicatorId = $(this).attr("name");
+            updateAuditTemplateIndicatorScore(optionId, indicatorId);
+          }
         }
     );
   });
+
+  $('#audit-indicator-image-upload-form-button').click(function() {
+    $( '#audit-indicator-image-upload-form' ).submit();
+  });
+
+  $('#audit-indicator-image-upload-form').submit(function() {
+    var image = new FormData($( "#audit-indicator-image-upload-form" )[0]);
+    var templateIndicatorId = $(".modal-body #id").val();
+    uploadAuditTemplateIndicatorImage(templateIndicatorId, image);
+  });
+
+}
+
+function uploadAuditTemplateIndicatorImage(templateIndicatorId, image) {
+  API_UPLOAD_IMAGE(API_ENDPOINT + API_AUDIT_IMAGE_UPLOAD + templateIndicatorId + "/", image, uploadAuditIndicatorImageSuccess, uploadAuditIndicatorImageFailure, "json", templateIndicatorId);
+}
+
+function uploadAuditIndicatorImageSuccess(response, params) {
+  fields = $.parseJSON(response.data.attributes.result)[0];
+  $( "#audit-indicator-" + params + " .audit-indicator-upload").append(insertAuditIndicatorUpload(fields.name));
+}
+
+function uploadAuditIndicatorImageFailure(error) {
+  console.log(error);
+}
+
+function updateAuditTemplateIndicatorScore(optionId, indicatorId) {
+  var template_indicator = { "id": indicatorId, "indicator_option": optionId }
+  API_UPDATE(API_ENDPOINT + API_TEMPLATE_INDICATOR + indicatorId + "/", template_indicator, updateAuditTemplateIndicatorScoreSuccess, updateAuditTemplateIndicatorScoreFailure, "json");
+}
+
+function updateAuditTemplateIndicatorScoreSuccess(response) {
+  console.log(response);
+}
+
+function updateAuditTemplateIndicatorScoreFailure(error) {
+  console.log(error);
 }
 
 function loadAuditTable(data) {
@@ -298,7 +391,9 @@ function getAuditListFailure(response) {
 //---------------------------------------------------//
 // Get Audit button functions
 function getAuditDetail(auditId) {
-  API_GET(API_ENDPOINT  + API_AUDIT, auditId + "/", getAuditDetailSuccess, getAuditDetailFailure, "json");
+  if (auditId > 0) {
+    API_GET(API_ENDPOINT + API_AUDIT, auditId + "/", getAuditDetailSuccess, getAuditDetailFailure, "json");
+  }
 }
 
 function getAuditDetailSuccess(response) {
