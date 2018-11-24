@@ -189,7 +189,7 @@ function updateIndicator(indicatorId, indicator) {
 
 function updateIndicatorSuccess(response) {
   console.log(response);
-  $ ( "#indicator-' + item.id + '-name" );
+  $ ( "#indicator-" + item.id + "-name" );
 }
 
 function updateIndicatorFailure(response) {
