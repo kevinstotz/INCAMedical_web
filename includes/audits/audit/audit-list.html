@@ -1,0 +1,35 @@
+<div class="audit-list-section">
+    <div class="audit-list-section-1">
+        <form id="audits-audits-table-form" class="form input-group-md">
+          <table class="blueTable" id="audits-audits-table">
+            <thead id="audits-audits-table-head">
+              <tr>
+                  <th style="width:30px"></th>
+                  <th style="width:250px">Facility</th>
+                  <th style="width:200px">Area</th>
+                  <th style="width:100px">Template</th>
+                  <th style="width:60px">Score</th>
+                  <th style="width:100px">Created</th>
+              </tr>
+            </thead>
+            <tbody id="audits-audits-table-tbody"></tbody>
+          </table>
+        </form>
+    </div>
+
+    <div class="audit-list-section-2">
+        <h3>New Audit</h3>
+        <form id="new-audit-form" name="new-audit-form" class="form input-group-md">
+
+            <label for="new-audit-facility-select"></label>
+            <select name="new-audit-facility-select" class="form-control company-dropdown-select" id="new-audit-facility-select"></select>
+
+            <label for="new-audit-audit-area-form-select"></label>
+            <select name="new-audit-audit-area-form-select" class="form-control audit-area-dropdown" id="new-audit-audit-area-form-select"></select>
+
+            <label for="new-audit-template-select"></label>
+            <select name="new-audit-template-select" class="form-control template-dropdown-select" id="new-audit-template-select"></select>
+            <input id="create-new-audit-button" type="submit" class="myButton pull-right" value="New"/>
+        </form>
+    </div>
+</div>

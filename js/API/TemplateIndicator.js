@@ -3,14 +3,16 @@ function loadTemplateIndicatorTree(data) {
   var tree = [];
 
   for (var item in data) {
-    var node = { "id" : "", "parent" : "", "text" : "" , "type" : "indicator",} ;
+    var node = { "id" : "", "parent" : "", "text" : "", "type" : "indicator" };
+
     node.id = data[item].attributes.uuid;
     node.parent = data[item].attributes.parent;
     node.text = data[item].attributes.text;
+    node.li_attr = { "data-id": data[item].id };
     tree.push(node);
   }
 
-  Array.prototype.push.apply(tree,$('#jstree_category_assignment').jstree(true).settings.core.data);
+  Array.prototype.push.apply(tree, $('#jstree_category_assignment').jstree(true).settings.core.data);
   $('#jstree_category_assignment').jstree(true).settings.core.data = tree;
   $('#jstree_category_assignment').jstree(true).refresh();
   $('#jstree_category_assignment').show();
@@ -20,9 +22,8 @@ function loadTemplateIndicatorTree(data) {
 
 //---------------------------------------------------//
 // Update template indicator functions
-function updateTemplateIndicator(data) {
-  template = { "id": sessionStorage.getItem("templateId"), "indicators": [data] };
-  API_UPDATE(API_ENDPOINT + API_TEMPLATE + sessionStorage.getItem("templateId")  + "/", template, updateTemplateIndicatorSuccess, updateTemplateIndicatorFailure, "json");
+function updateTemplateIndicator(templateIndicatorID, data) {
+  API_UPDATE(API_ENDPOINT + API_TEMPLATE_INDICATOR + templateIndicatorID + "/", data, updateTemplateIndicatorSuccess, updateTemplateIndicatorFailure, "json");
 }
 
 function updateTemplateIndicatorSuccess(response) {

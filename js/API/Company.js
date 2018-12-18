@@ -69,7 +69,7 @@ function updateCompanyFailure(response) {
 
 function createCompany(data) {
   var company = {"name": data.name}
-  API_POST(API_ENDPOINT + API_COMPANY_CREATE, company, createCompanySuccess, createCompanyFailure, "json");
+  API_PUT(API_ENDPOINT + API_COMPANY_CREATE, company, createCompanySuccess, createCompanyFailure, "json");
 }
 
 function createCompanySuccess(response) {
@@ -90,16 +90,13 @@ function createCompanyFailure(response) {
 function getCompanyList(options) {
   var option = "?";
   if ( options.hasOwnProperty('active') ) { option += "active=" + options.active; }
-
   API_GET(API_ENDPOINT + API_COMPANY, option, getCompanyListSuccess, getCompanyListFailure, "text");
 }
 
 function getCompanyListSuccess(response) {
   var companyId = sessionStorage.getItem("companyId");
-
-  getAuditAreaList(companyId);
-  getTemplateList(companyId);
   loadCompanySelect(parseResponse(response));
+  loadNewAuditCompanySelect(parseResponse(response));
   if (companyId > 0 ) {
     getCompanyDetail(companyId);
   }
@@ -128,10 +125,14 @@ function getCompanyDetailSuccess(response) {
     switch($el.name) {
         case 'name':
             sessionStorage.setItem('companyId', data.id);
+            getClinicTypeList(sessionStorage.getItem("companyId"));
+            getSpecialtyTypeList(sessionStorage.getItem("companyId"));
             getAuditAreaList(sessionStorage.getItem("companyId"));
-            getTemplateList(sessionStorage.getItem("companyId"));
             getCategoryList(sessionStorage.getItem("companyId"));
-            getIndicatorTypeList( { "company": sessionStorage.getItem("companyId"), "active": true } );
+            getIndicatorTypeList(sessionStorage.getItem("companyId"));
+            getIndicatorOptionList(sessionStorage.getItem("companyId"));
+            getIndicatorList(sessionStorage.getItem("companyId"));
+            getTemplateList(sessionStorage.getItem("companyId"));
             $(this).val(data.attributes['name']);
             break;
         default:

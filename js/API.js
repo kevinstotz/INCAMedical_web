@@ -1,6 +1,6 @@
-const API_PORT = 80;
-const API_HOST = 'http://api.incamedical.com';
-const WEBSITE = 'audits.incamedical.com';
+const API_PORT = 10100;
+const API_HOST = 'http://www.api.incamedical.com';
+const WEBSITE = 'www.audits.incamedical.com';
 const ALLOWED_PORT = API_PORT;
 const ALLOWED_ORIGIN = WEBSITE + ':' + ALLOWED_PORT;
 const API_URI = API_HOST + ':' + API_PORT + '/api';
@@ -21,14 +21,39 @@ const API_NOTE_CREATE = '/note/';
 const API_TEMPLATE_CREATE = '/template/create/';
 const API_TEMPLATE_CATEGORY = '/template-category/';
 const API_TEMPLATE_INDICATOR = '/template-indicator/';
+const API_AUDIT_CATEGORY = '/audit-category/';
+const API_AUDIT_INDICATOR = '/audit-indicator/';
+const API_AUDIT_INDICATOR_ANSWER = '/audit-indicator-option/';
+const API_AUDIT_INDICATOR_NOTE = '/audit-indicator-note/';
 const API_CATEGORY = '/category/';
 const API_INDICATOR = '/indicator/';
+const API_INDICATOR_CREATE = '/indicator/create';
 const API_ENDPOINT = API_URI + API_VERSION;
 
 
-function API_POST(url, data, success, error, dataType) {
+function API_PUT(url, data, success, error, dataType) {
   $.ajax({
     type: "PUT",
+    url: url,
+    data: JSON.stringify(data),
+    xhrFields: {
+      withCredentials: false
+    },
+    headers: {
+      'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
+      'Accept': 'application/vnd.api+json',
+      'Content-Type': 'application/json'
+    },
+    success: success,
+    error: error,
+    dataType: dataType
+  });
+  return 0;
+}
+
+function API_POST(url, data, success, error, dataType) {
+  $.ajax({
+    type: "POST",
     url: url,
     data: JSON.stringify(data),
     xhrFields: {
@@ -51,6 +76,7 @@ function API_UPDATE(url, data, success, error, dataType) {
   $.ajax({
     type: "PATCH",
     url: url,
+    processData: false,
     data: JSON.stringify(data),
     xhrFields: {
       withCredentials: false
@@ -58,8 +84,10 @@ function API_UPDATE(url, data, success, error, dataType) {
     headers: {
       'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
       'Accept': 'application/vnd.api+json',
-      'Content-Type': 'application/json'
+      'Content-Type': "application/json; charset=utf-8",
+      'contentType': "application/json; charset=utf-8",
     },
+    contentType: "application/json; charset=utf-8",
     success: success,
     error: error,
     dataType: dataType

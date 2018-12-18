@@ -25,3 +25,19 @@
 .audit-indicator-upload {
   text-align: center;
 }
+.audit-list-section-2 {
+  width: 200px;
+  position: absolute;
+  display: inline;
+  top: 0px;
+  right: 0px;
+}
+.audit-list-section-1 {
+  width: 600px;
+
+}
+
+.audit-list-section {
+  width: 100%;
+
+}

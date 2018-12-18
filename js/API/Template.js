@@ -35,12 +35,13 @@ function getTemplateList(companyId) {
     API_GET(API_ENDPOINT + API_TEMPLATE + "?company=" + companyId, "", getTemplateListSuccess, getTemplateListFailure, "text");
   } else {
     loadTemplateSelect([]);
+    loadNewAuditTemplateSelect([]);
   }
 }
 
 function getTemplateListSuccess(response) {
   var templateId = sessionStorage.getItem('templateId');
-
+  loadNewAuditTemplateSelect(parseResponse(response));
   loadTemplateSelect(parseResponse(response));
   if ( templateId > 0 ) {
     getTemplateDetail(templateId);
@@ -50,6 +51,7 @@ function getTemplateListSuccess(response) {
 function getTemplateListFailure(response) {
   sessionStorage.setItem("templateId", 0);
   loadTemplateSelect([]);
+  loadNewAuditTemplateSelect([]);
 }
 
 
@@ -77,6 +79,7 @@ function getTemplateDetailSuccess(response) {
 function getTemplateDetailFailure(response) {
   console.log(response);
   loadTemplateSelect(parseResponse(response));
+  loadNewAuditTemplateSelect(parseResponse(response));
 }
 //---------------------------------------------------//
 
@@ -91,6 +94,7 @@ function deleteTemplateSuccess(response) {
   emptyTemplateCategoryTree();
   emptyTemplateForms();
   getTemplateList();
+  $('.category-indicator-tree-spinner').hide();
 }
 
 function deleteTemplateFailure(response) {
@@ -98,6 +102,7 @@ function deleteTemplateFailure(response) {
   emptyTemplateCategoryTree();
   emptyTemplateForms();
   getTemplateList();
+  $('.category-indicator-tree-spinner').hide();
 }
 //---------------------------------------------------//
 
@@ -124,8 +129,8 @@ function updateTemplateFailure(response) {
 // Create Template button functions
 
 function createTemplate(companyId, data) {
-  var template = { "name": data.name, "company": { "company": companyId } };
-  API_POST(API_ENDPOINT + API_TEMPLATE_CREATE, template, createTemplateSuccess, createTemplateFailure, "json");
+  var template = { "name": data.name, "company": companyId };
+  API_PUT(API_ENDPOINT + API_TEMPLATE_CREATE, template, createTemplateSuccess, createTemplateFailure, "json");
 }
 
 function createTemplateSuccess(response) {

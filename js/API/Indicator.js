@@ -1,6 +1,5 @@
 
 function emptyIndicatorForms() {
-
   $( "#settings-indicator-table > tbody" ).empty();
 }
 
@@ -16,6 +15,8 @@ function insertIndicatorImage(id, url) {
 }
 
 function loadIndicatorTable(data) {
+  console.log("loaded");
+  emptyIndicatorForms();
   var rows = "";
   var selected = "";
   var disabled = "";
@@ -43,16 +44,17 @@ function loadIndicatorTable(data) {
         selected = "";
       }
 
-      if (item.attributes.type.id == 2) { disabled =" disabled "; }
+      if (item.attributes.type.id == 2) { disabled = " disabled "; }
       rows += '</select></td>';
-      rows += '<td><select multiple class="form-control settings-indicator-table-options-select" id="settings-indicator-table-options-select-' + item.id + '">';
-
-      for (var inidicator_option in INDICATOR_OPTION_LIST) {
-        for (var item_indicator_option in item.attributes.options) {
-          if (INDICATOR_OPTION_LIST[inidicator_option].id == item.attributes.options[item_indicator_option].id) { selected = "selected"; }
+      rows += '<td><select multiple class="form-control settings-indicator-table-options-select" name="' + item.id + '" id="settings-indicator-table-options-select-' + item.id + '">';
+      for (var inidicator_option in INDICATOR_OPTIONS_LIST) {
+        if (INDICATOR_OPTIONS_LIST[inidicator_option].attributes.active) {
+          for (var item_indicator_option in item.attributes.options) {
+            if (INDICATOR_OPTIONS_LIST[inidicator_option].id == item.attributes.options[item_indicator_option].id) { selected = " selected "; }
+          }
+          rows += '<option ' + selected + disabled + ' value=' + INDICATOR_OPTIONS_LIST[inidicator_option].id + '>' + textLength(INDICATOR_OPTIONS_LIST[inidicator_option].attributes.option, 20) + '</option>';
+          selected = "";
         }
-        rows += '<option ' + selected + disabled + ' value=' + INDICATOR_OPTION_LIST[inidicator_option].id + '>' + textLength(INDICATOR_OPTION_LIST[inidicator_option].attributes.option, 20) + '</option>';
-        selected = "";
       }
 
       rows += '</select></td>';
@@ -96,43 +98,53 @@ function loadIndicatorTable(data) {
       updateIndicator(indicatorId, { "id": indicatorId, "active": active } );
   });
 
+  $("select.settings-indicator-table-options-select").on('focusout',function(){
+      var indicatorOptions = $(this).val();
+      var indicatorId = $(this).attr("name");
+      var options = [];
+      for (var indicatorOption in indicatorOptions) {
+        options.push( indicatorOptions[indicatorOption] );
+      }
+      updateIndicator(indicatorId, { "id": indicatorId, "options": options } );
+  });
+
   $( "select.settings-indicator-table-type-select").change(function(event) {
-    var indicatortypeId = $(this).val();
-    var indicatorId = $(this).attr("name");
+      var indicatortypeId = $(this).val();
+      var indicatorId = $(this).attr("name");
 
-    updateIndicator(indicatorId, { "company": sessionStorage.getItem("companyId"), "id": indicatorId, "type": { "type": indicatortypeId } } );
+      updateIndicator(indicatorId, { "company": sessionStorage.getItem("companyId"), "id": indicatorId, "type": { "type": indicatortypeId } } );
   });
 
-  $( "button.image-indicator" ).click(function(event) {
-      event.preventDefault();
-       $(".modal-body #id").val( $( this).val() );
-      return true;
+  $( "button.image-indicator" ).one('click', function(event) {
+    event.preventDefault();
+    console.log($(this));
+    $(".modal-body #id").val( $( this).val() );
   });
 
-  $('#settings-indicator-image-upload-form-button').click(function() {
-    $( '#settings-indicator-image-upload-form' ).submit();
+  $('#settings-indicator-image-upload-form-button').one('click', function(event) {
+    $( "#settings-indicator-image-upload-form" ).submit();
+
   });
 
 
-  $('#settings-indicator-image-upload-form').submit(function() {
+  $('#settings-indicator-image-upload-form').submit(function(event) {
+    event.preventDefault();
     var image = new FormData($( "#settings-indicator-image-upload-form" )[0]);
     var indicatorId = $(".modal-body #id").val();
-    uploadIndicatorImage(image);
-  });
+    uploadIndicatorImage(indicatorId, image);
+});
 
 }
 
 //---------------------------------------------------//
 // Get Indicator List button functions
 
-function getIndicatorList(options) {
-  var option = "?";
-  var companyId = 0;
-  if ( options.hasOwnProperty('active') ) { option += "active=" + options.active + "&"; }
-  if ( options.hasOwnProperty('company') ) { option += "company=" + options.company + "&"; companyId=options.company; }
+function getIndicatorList(companyId) {
+  var options = "?";
+  options += "company=" + companyId;
 
   if (companyId > 0) {
-    API_GET(API_ENDPOINT + API_INDICATOR , option, getIndicatorListSuccess, getIndicatorListFailure, "text");
+    API_GET(API_ENDPOINT + API_INDICATOR , options, getIndicatorListSuccess, getIndicatorListFailure, "text");
   } else {
     loadIndicatorTable([]);
   }
@@ -188,8 +200,7 @@ function updateIndicator(indicatorId, indicator) {
 }
 
 function updateIndicatorSuccess(response) {
-  console.log(response);
-  $ ( "#indicator-" + item.id + "-name" );
+  //console.log(response);
 }
 
 function updateIndicatorFailure(response) {
@@ -202,14 +213,14 @@ function updateIndicatorFailure(response) {
 
 function createIndicator(name) {
   var indicator = { "name": name, "company": sessionStorage.getItem("companyId") };
-  API_POST(API_ENDPOINT + API_INDICATOR, indicator, createIndicatorSuccess, createIndicatorFailure, "json");
+  API_PUT(API_ENDPOINT + API_INDICATOR_CREATE + "/", indicator, createIndicatorSuccess, createIndicatorFailure, "json");
 }
 
 function createIndicatorSuccess(response) {
   var data = {};
-
+  console.log("create indicator success");
   sessionStorage.setItem("indicatorId", response.data.attributes.result);
-  getIndicatorList({ "company": sessionStorage.getItem("companyId") });
+  getIndicatorList(sessionStorage.getItem("companyId"));
 }
 
 function createIndicatorFailure(response) {
@@ -220,8 +231,8 @@ function createIndicatorFailure(response) {
 //---------------------------------------------------//
 // Create Indicator button functions
 
-function uploadIndicatorImage(image) {
-  API_UPLOAD_IMAGE(API_ENDPOINT + API_UPLOAD, image, uploadIndicatorImageSuccess, uploadIndicatorImageFailure, "json");
+function uploadIndicatorImage(indicatorId, image) {
+  API_UPLOAD_IMAGE(API_ENDPOINT + API_UPLOAD + indicatorId + "/", image, uploadIndicatorImageSuccess, uploadIndicatorImageFailure, "json");
 }
 
 function uploadIndicatorImageSuccess(response) {

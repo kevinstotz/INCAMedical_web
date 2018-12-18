@@ -28,7 +28,7 @@
         <script>$(function(){ $("#footer").load("includes/footer.html", function() {
                       registerFooterEvents();
                     }); });</script>
-        <script>$(function(){ $("#audits-audits-pane").load("includes/audits/audit/audit.html", function() {
+        <script>$(function(){ $("#new-audit-new-pane").load("includes/audits/audit/audit-list.html", function() {
                       registerAuditsAuditsEvents();
                     }); });</script>
         <script>$(function(){ $("#notebody").load("includes/audits/audit/note-modal.html"); });</script>
@@ -49,6 +49,15 @@
         <script>$(function(){ $("#settings-category-pane").load("includes/settings/settings-category.html", function() {
                       registerSettingsCategoryEvents();
                     }); });</script>
+        <script>$(function(){ $("#settings-clinic-type-pane").load("includes/settings/settings-clinic-type.html", function() {
+                      registerSettingsClinicTypeEvents();
+                    }); });</script>
+        <script>$(function(){ $("#settings-specialty-type-pane").load("includes/settings/settings-specialty-type.html", function() {
+                      registerSettingsSpecialtyTypeEvents();
+                    }); });</script>
+        <script>$(function(){ $("#settings-indicator-options-pane").load("includes/settings/settings-indicator-options.html", function() {
+                      registerSettingsIndicatorOptionsEvents();
+                    }); });</script>
         <script>$(function(){ $("#settings-indicator-pane").load("includes/settings/settings-indicator.html", function() {
                       registerSettingsIndicatorEvents();
                     }); });</script>
@@ -63,6 +72,7 @@
         <script src="js/API/IndicatorOption.js"></script>
         <script src="js/API/ClinicType.js"></script>
         <script src="js/API/SpecialtyType.js"></script>
+        <script src="js/API/NewAudit.js"></script>
         <script src="js/API/Company.js"></script>
         <script src="js/API/Template.js"></script>
         <script src="js/API/Category.js"></script>
@@ -75,29 +85,44 @@
       <header id="header" class="header"></header>
       <div class="main-content">
           <div class="">
-              <div id="audits-tabs"  class="vertical-tab audits-tabs" role="tabpanel">
-                  <ul class="nav nav-tabs" role="tablist">
-                      <li id="section-audits-audits" role="presentation" class="active">
-                          <a href="#audits-audits-pane" aria-controls="section-audits-audits" role="tab" data-toggle="tab">Audits</a>
-                      </li>
-                  </ul>
+              <div id="audits-tabs" class="vertical-tab audits-tabs" role="tabpanel">
+                <ul id="section-audits-audits-tablist" class="nav nav-tabs" role="tablist"></ul>
+
+                <div class="tab-content tabs">
+                    <div role="tabpanel" class="active" id="audits-audits-pane-heading"></div>
+                    <div role="tabpanel" class="tab-pane fade in active" id="audits-audits-pane"></div>
+                </div>
+
+              </div>
+
+              <div id="new-audit-tabs"  class="vertical-tab new-audit-tabs" role="tabpanel">
                   <div class="tab-content tabs">
-                      <div role="tabpanel" class="tab-pane fade in active" id="audits-audits-pane"></div>
+                      <div role="tabpanel" class="tab-pane fade in active" id="new-audit-new-pane"></div>
                   </div>
               </div>
-              <div id="settings-tabs"  class="vertical-tab settings-tabs"  role="tabpanel">
+
+              <div id="settings-tabs" class="vertical-tab settings-tabs"  role="tabpanel">
                   <ul class="nav nav-tabs" role="tablist">
                       <li id="section-settings-facility" role="presentation" class="active">
                           <a href="#settings-facility-pane" aria-controls="section-settings-facility" role="tab" data-toggle="tab">Facilities</a>
                       </li>
+                      <li id="section-settings-clinic-type" role="presentation">
+                          <a href="#settings-clinic-type-pane" aria-controls="section-settings-clinic-type" role="tab" data-toggle="tab">Clinic Types</a>
+                      </li>
+                      <li id="section-settings-specialty-type" role="presentation">
+                          <a href="#settings-specialty-type-pane" aria-controls="section-settings-specialty-type" role="tab" data-toggle="tab">Specialty Types</a>
+                      </li>
                       <li id="section-settings-area" role="presentation">
-                          <a href="#settings-area-pane" aria-controls="section-settings-area" role="tab" data-toggle="tab">Areas</a>
+                        <a href="#settings-area-pane" aria-controls="section-settings-area" role="tab" data-toggle="tab">Areas</a>
                       </li>
                       <li id="section-settings-category" role="presentation">
-                          <a href="#settings-category-pane" aria-controls="section-settings-category" role="tab" data-toggle="tab">Category</a>
+                          <a href="#settings-category-pane" aria-controls="section-settings-category" role="tab" data-toggle="tab">Categories</a>
+                      </li>
+                      <li id="section-settings-indicator-options" role="presentation">
+                          <a href="#settings-indicator-options-pane" aria-controls="section-settings-indicator-options" role="tab" data-toggle="tab">Indicator Options</a>
                       </li>
                       <li id="section-settings-indicator" role="presentation">
-                          <a href="#settings-indicator-pane" aria-controls="section-settings-indicator" role="tab" data-toggle="tab">Indicator</a>
+                          <a href="#settings-indicator-pane" aria-controls="section-settings-indicator" role="tab" data-toggle="tab">Indicators</a>
                       </li>
                       <li id="section-settings-template" role="presentation">
                         <a href="#settings-template-pane" aria-controls="section-settings-template" role="tab" data-toggle="tab">Templates</a>
@@ -105,8 +130,11 @@
                   </ul>
                   <div class="tab-content tabs settings-tabs">
                       <div role="tabpanel" class="tab-pane fade in active" id="settings-facility-pane"></div>
+                      <div role="tabpanel" class="tab-pane fade" id="settings-specialty-type-pane"></div>
+                      <div role="tabpanel" class="tab-pane fade" id="settings-clinic-type-pane"></div>
                       <div role="tabpanel" class="tab-pane fade" id="settings-area-pane"></div>
                       <div role="tabpanel" class="tab-pane fade" id="settings-category-pane"></div>
+                      <div role="tabpanel" class="tab-pane fade" id="settings-indicator-options-pane"></div>
                       <div role="tabpanel" class="tab-pane fade" id="settings-indicator-pane"></div>
                       <div role="tabpanel" class="tab-pane fade" id="settings-template-pane"></div>
                   </div>
@@ -122,6 +150,7 @@
                       </div>
                   </div>
               </div>
+
           </div>
       </div>
       <footer id="footer" class="footer"></footer>

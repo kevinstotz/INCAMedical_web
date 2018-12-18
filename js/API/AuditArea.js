@@ -39,17 +39,17 @@ function getAuditAreaDetail(auditAreaId) {
 // Create Audit Area button functions
 function createAuditArea(companyId, data) {
   var auditArea = {"name": data["name"],
-                   "companyId" : companyId,
+                   "company" : companyId,
                    "director": { "name": data.director, "type": 7 },
                    "manager": { "name": data.manager, "type": 7  },
                    "phone": { "phone_number": data.phone.replace(/\D/g,''),
                              "type": { "type": 3 }
                             },
-                    "clinicTypeId": data["clinic-type"],
-                    "specialtyTypeId": data["specialty-type"],
+                    "clinic_type": data["clinic-type"],
+                    "specialty_type": data["specialty-type"],
                     "present_on_rounds": data.presentonrounds
                    }
-  API_POST(API_ENDPOINT + API_AUDIT_AREA, auditArea, createAuditAreaSuccess, createAuditAreaFailure, "json");
+  API_PUT(API_ENDPOINT + API_AUDIT_AREA, auditArea, createAuditAreaSuccess, createAuditAreaFailure, "json");
 }
 
 function createAuditAreaSuccess(response) {
@@ -62,6 +62,7 @@ function createAuditAreaSuccess(response) {
 function createAuditAreaFailure(response) {
   sessionStorage.setItem("areaId", 0);
   loadAuditAreaSelect([]);
+  loadNewAuditAuditAreaSelect([]);
   console.log(response);
 }
 //---------------------------------------------------//
@@ -74,12 +75,13 @@ function getAuditAreaList(companyId) {
     API_GET(API_ENDPOINT + API_AUDIT_AREA, "?company=" + companyId, getAuditAreaListSuccess, getAuditAreaListFailure, "text");
   } else {
     loadAuditAreaSelect([]);
+    loadNewAuditAuditAreaSelect([]);
   }
 }
 
 function getAuditAreaListSuccess(response) {
   var areaId = sessionStorage.getItem("areaId");
-
+  loadNewAuditAuditAreaSelect(parseResponse(response));
   loadAuditAreaSelect(parseResponse(response));
   if (areaId > 0) {
     getAuditAreaDetail(areaId);
@@ -89,6 +91,7 @@ function getAuditAreaListSuccess(response) {
 function getAuditAreaListFailure(response) {
   sessionStorage.setItem("areaId", 0);
   loadAuditAreaSelect([]);
+  loadNewAuditAuditAreaSelect([]);
 }
 //---------------------------------------------------//
 
@@ -109,10 +112,10 @@ function getAuditAreaDetailSuccess(response) {
               $(this).val(data.attributes.director.name);
               break;
           case 'specialty-type':
-              $(this).val(data.attributes.specialty_type.id);
+              $(this).val(data.relationships.specialty_type.data.id);
               break;
           case 'clinic-type':
-              $(this).val(data.attributes.clinic_type.id);
+              $(this).val(data.relationships.clinic_type.data.id);
               break;
           case 'manager':
               $(this).val(data.attributes.manager.name);

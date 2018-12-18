@@ -15,6 +15,10 @@ $.fn.serializeObject = function()
     return o;
 };
 
+function registerNewAuditNewEvents() {
+
+}
+
 function registerSettingsFacilityEvents() {
     getCompanyList({"active": true });
 
@@ -45,7 +49,6 @@ function registerSettingsFacilityEvents() {
       emptyTemplateForms();
       emptyIndicatorForms();
       if (companyId > 0) {
-        getCompanyDetail(companyId);
         $( "#update-facility-button" ).show();
         $( "#create-facility-button" ).hide();
       } else {
@@ -56,21 +59,108 @@ function registerSettingsFacilityEvents() {
     });
 }
 
+function registerSettingsSpecialtyTypeEvents() {
+
+      $( "#create-specialty-type-button" ).click(function( event ) {
+        event.preventDefault();
+        createSpecialtyType(sessionStorage.getItem("companyId"), $( "#settings-specialty-type-select-form" ).serializeObject() );
+      });
+
+      $( "#update-specialty-type-button" ).click(function( event ) {
+        event.preventDefault();
+        updateSpecialtyType( $( "#settings-specialty-type-select-form" ).serializeObject() );
+      });
+
+      $( "#delete-specialty-type-button" ).click(function( event ) {
+        event.preventDefault();
+        deleteSpecialtyType(sessionStorage.getItem("specialtyTypeId"));
+      });
+
+      $( "#settings-specialty-type-select" ).change(function( event ) {
+        event.preventDefault();
+        var specialtyTypeId = 0;
+
+        if ($( this ).val()) {
+          specialtyTypeId = parseInt($( this ).val());
+          sessionStorage.setItem("specialtyTypeId", clinicTypeId);
+        }
+
+        if (specialtyTypeId > 0) {
+          getSpecialtyTypeDetail(sessionStorage.getItem("specialtyTypeId") );
+          $( "#update-specialty-type-button" ).show();
+          $( "#create-specialty-type-button" ).hide();
+        } else {
+          $( "#settings-specialty-type-select-form" )[0].reset();
+          $( "#update-specialty-type-button" ).hide();
+          $( "#create-specialty-type-button" ).show();
+        }
+      });
+}
+
+function registerSettingsClinicTypeEvents() {
+
+    $( "#create-clinic-type-button" ).click(function( event ) {
+      event.preventDefault();
+      createClinicType(sessionStorage.getItem("companyId"), $( "#settings-clinic-type-select-form" ).serializeObject() );
+    });
+
+    $( "#update-clinic-type-button" ).click(function( event ) {
+      event.preventDefault();
+      updateClinicType( $( "#settings-clinic-type-select-form" ).serializeObject() );
+    });
+
+    $( "#delete-clinic-type-button" ).click(function( event ) {
+      event.preventDefault();
+      deleteClinicType(sessionStorage.getItem("clinicTypeId"));
+    });
+
+    $( "#settings-clinic-type-select" ).change(function( event ) {
+      event.preventDefault();
+      var clinicTypeId = 0;
+
+      if ($( this ).val()) {
+        clinicTypeId = parseInt($( this ).val());
+        sessionStorage.setItem("clinicTypeId", clinicTypeId);
+      }
+
+      if (clinicTypeId > 0) {
+        getClinicTypeDetail(sessionStorage.getItem("clinicTypeId") );
+        $( "#update-clinic-type-button" ).show();
+        $( "#create-clinic-type-button" ).hide();
+      } else {
+        $( "#settings-clinic-type-select-form" )[0].reset();
+        $( "#update-clinic-type-button" ).hide();
+        $( "#create-clinic-type-button" ).show();
+      }
+    });
+}
+
 function registerHeaderEvents() {
   $('#audits-header').click(function () {
     $('#audits-tabs').show();
+    $('#new-audit-tabs').hide();
     $('#reports-tabs').hide();
     $('#settings-tabs').hide();
   });
+
   $('#settings-header').click(function () {
     $('#audits-tabs').hide();
+    $('#new-audit-tabs').hide();
     $('#reports-tabs').hide();
     $('#settings-tabs').show();
   });
 
   $('#reports-header').click(function () {
     $('#audits-tabs').hide();
+    $('#new-audit-tabs').hide();
     $('#reports-tabs').show();
+    $('#settings-tabs').hide();
+  });
+
+  $('#new-audit-header').click(function () {
+    $('#audits-tabs').hide();
+    $('#new-audit-tabs').show();
+    $('#reports-tabs').hide();
     $('#settings-tabs').hide();
   });
 }
@@ -81,10 +171,102 @@ function registerFooterEvents() {
   });
 }
 
+function registerSettingsIndicatorOptionsEvents() {
+  getIndicatorOptionList(sessionStorage.getItem("companyId"));
+  $( "#create-indicator-option-button" ).click(function( event ) {
+    event.preventDefault();
+    createIndicatorOption(sessionStorage.getItem("companyId"), $( "#settings-indicator-option-select-form" ).serializeObject() );
+  });
+
+  $( "#update-indicator-option-button" ).click(function( event ) {
+    event.preventDefault();
+    console.log($( "#settings-indicator-option-select-form" ).serializeObject());
+    //updateIndicatorOption(  );
+  });
+
+  $( "#delete-indicator-option-button" ).click(function( event ) {
+    event.preventDefault();
+    deleteIndicatorOption(sessionStorage.getItem("indicatorOptionId"));
+  });
+
+  $( "#settings-indicator-option-select" ).change(function( event ) {
+    event.preventDefault();
+    var indicatorOptionId = 0;
+
+    if ($( this ).val()) {
+      indicatorOptionId = parseInt($( this ).val());
+      sessionStorage.setItem("indicatorOptionId", indicatorOptionId);
+    }
+
+    if (indicatorOptionId > 0 ) {
+      getIndicatorOption(sessionStorage.getItem("indicatorOptionId") );
+      $( "#update-indicator-option-button" ).show();
+      $( "#create-indicator-option-button" ).hide();
+    } else {
+      $( "#settings-indicator-option-select-form" )[0].reset();
+      $( "#update-indicator-option-button" ).hide();
+      $( "#create-indicator-option-button" ).show();
+    }
+  });
+}
+
 function registerAuditsAuditsEvents() {
+  $('#section-audits-audits-tablist').show();
   if (sessionStorage.getItem("companyId") > 0 ) {
+    sessionStorage.setItem("auditId", 0);
     getAuditList({"active" : true, "company": sessionStorage.getItem("companyId") });
   }
+
+  $( "#create-new-audit-button" ).click(function( event ) {
+    event.preventDefault();
+    $( '#new-audit-form' ).submit();
+  });
+
+  $('#new-audit-form').submit(function() {
+    createNewAudit( $( "#new-audit-form" ).serializeObject() );
+    return false;
+  });
+
+  $( "#new-audit-facility-select" ).change(function( event ) {
+    event.preventDefault();
+    var companyId = 0;
+
+    if ($( this ).val()) {
+      companyId = parseInt($( this ).val());
+      sessionStorage.setItem("companyId", companyId);
+    }
+
+    if (companyId > 0) {
+      getAuditList( { "company": companyId, "active": true } );
+    }
+  });
+
+  $( "#new-audit-audit-area-form-select" ).change(function( event ) {
+    event.preventDefault();
+    var areaId = 0;
+
+    if ($( this ).val()) {
+      areaId = parseInt($( this ).val());
+      sessionStorage.setItem("areaId", areaId);
+    }
+    if (areaId > 0) {
+      getAuditAreaDetail(areaId);
+    }
+  });
+
+  $( "#new-audit-template-select" ).change(function( event ) {
+    event.preventDefault();
+    var templateId = 0;
+
+    if ($( this ).val()) {
+      templateId = parseInt($( this ).val());
+      sessionStorage.setItem("templateId", templateId);
+    }
+
+    if (templateId > 0) {
+      getTemplateDetail(sessionStorage.getItem("templateId") );
+    }
+  });
 }
 
 function registerSettingsCategoryEvents() {
@@ -166,8 +348,8 @@ function registerSettingsIndicatorEvents() {
 
 function registerSettingsAuditAreaEvents() {
   if (sessionStorage.getItem("companyId") > 0 ) {
-    getSpecialtyTypeList();
-    getClinicTypeList();
+    getSpecialtyTypeList(sessionStorage.getItem("companyId"));
+    getClinicTypeList(sessionStorage.getItem("companyId"));
   }
   $( "#create-audit-area-button" ).click(function( event ) {
     event.preventDefault();
@@ -209,31 +391,19 @@ function registerReportsReportEvents() {}
 
 function registerSettingsTemplateEvents() {
   getTemplateCategoryList(sessionStorage.getItem("companyId"), sessionStorage.getItem("templateId"));
+
   $( "#create-template-button" ).click(function( event ) {
-    event.preventDefault();
     createTemplate(sessionStorage.getItem("companyId"), $( "#settings-template-select-form" ).serializeObject() );
   });
 
   $( "#update-template-button" ).click(function( event ) {
-    event.preventDefault();
     var data = $( "#settings-template-select-form" ).serializeObject();
-    //console.log(JSON.stringify(data));
     updateTemplate(data);
   });
 
   $( "#delete-template-button" ).click(function( event ) {
     event.preventDefault();
     deleteTemplate(sessionStorage.getItem("templateId"));
-  });
-
-  $(document).on("dnd_stop.vakata", function (e, data) {
-    var updateData = { "uuid": data.data.nodes[0], "parent": $('#jstree_category_assignment').jstree().get_parent(data.data.obj) }
-    if ( $('#jstree_category_assignment').jstree().get_type(data.data.obj) == "indicator") {
-      updateTemplateIndicator(updateData);
-    } else {
-      updateTemplateCategory(updateData);
-    }
-    return true;
   });
 
   $( "#settings-template-select" ).change(function( event ) {
@@ -254,6 +424,7 @@ function registerSettingsTemplateEvents() {
       $( "#settings-template-select-form" )[0].reset();
       $( "#update-template-button" ).hide();
       $( "#create-template-button" ).show();
+      $('.category-indicator-tree-spinner').hide();
     }
   });
 

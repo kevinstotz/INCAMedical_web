@@ -6,7 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 
 /config/dev.json
-
+static/media/
 # Runtime data
 pids
 *.pid

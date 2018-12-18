@@ -1,6 +1,5 @@
 
-
-var INDICATOR_OPTION_LIST = {};
+var INDICATOR_OPTIONS_LIST = {};
 var INDICATOR_TYPE_LIST = {};
 
 $.fn.isInSession = function(variable) {

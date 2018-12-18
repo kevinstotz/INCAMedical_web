@@ -13,6 +13,7 @@ a:hover,a:focus{
 
 .vertical-tab {
     display: block;
+
 }
 
 .vertical-tab .nav-tabs{
@@ -35,7 +36,7 @@ a:hover,a:focus{
     background-color: #f1f2f6;
     font-size: 14px;
     text-transform: uppercase;
-    text-align: center;
+    text-align: left;
     letter-spacing: 1px;
     padding: 15px 15px;
     margin: 0;
@@ -99,7 +100,7 @@ a:hover,a:focus{
     text-align: justify;
     line-height: 23px;
     vertical-align: top;
-    padding: 15px 15px 15px 30px;
+    padding: 15px 0px 15px 15px;
     display: table-cell;
 }
 
@@ -141,15 +142,21 @@ a:hover,a:focus{
   display: none;
 }
 
+.new-audit-tabs {
+  display: block;
+  width: 100%;
+}
+
 .reports-tabs {
   display: none;
   width: 100%;
 }
 
 .audits-tabs {
-  display: block;
+  display: none;
   width: 100%;
 }
+
 .settings-template-indicator {
   padding-top: 80px;
 }

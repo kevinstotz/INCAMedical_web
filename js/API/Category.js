@@ -9,7 +9,7 @@ function loadCategoryTable(data) {
   row += '</tr>';
 
   $.each(data, function(i, item) {
-      row += '<tr id="category=' + item.id + '">';
+      row += '<tr id="category-' + item.id + '">';
       row += '<td>' + item.attributes.name + '</td>';
       row += '<td><button class="active-category" value="' + item.id + '" name="active"><i class="fas ' + ( ( 1 == item.attributes.active ) ? " fa-toggle-on ": " fa-toggle-off " ) + ' fa-2x"></i></button></td>';
       row += '<td><button class="delete-category" value="' + item.id + '"><i class="fas fa-trash fa-2x"></i></button></td>';
@@ -75,6 +75,7 @@ function getCategoryDetail(categoryId) {
 function getCategoryDetailSuccess(response) {
   var data = {};
   data = parseResponse(response);
+  console.log(data);
 }
 
 function getCategoryDetailFailure(response) {
@@ -86,7 +87,7 @@ function getCategoryDetailFailure(response) {
 // Delete category button functions
 function deleteCategory(categoryId) {
   API_DELETE(API_ENDPOINT + API_CATEGORY, categoryId + "/", deleteCategorySuccess, deleteCategoryFailure, "json");
-  $('table#settings-category-table tr#category=' + categoryId).remove();
+  $('table#settings-category-table tr#category-' + categoryId).remove();
 }
 
 function deleteCategorySuccess(response) {
@@ -119,7 +120,7 @@ function updateCategoryFailure(response) {
 
 function createCategory(name) {
   var category = { "name": name, "company": sessionStorage.getItem("companyId") };
-  API_POST(API_ENDPOINT + API_CATEGORY, category, createCategorySuccess, createCategoryFailure, "json");
+  API_PUT(API_ENDPOINT + API_CATEGORY, category, createCategorySuccess, createCategoryFailure, "json");
 }
 
 function createCategorySuccess(response) {
