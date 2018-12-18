@@ -172,7 +172,9 @@ function registerFooterEvents() {
 }
 
 function registerSettingsIndicatorOptionsEvents() {
-  getIndicatorOptionList(sessionStorage.getItem("companyId"));
+  if (sessionStorage.getItem("companyId") > 0 ) {
+    getIndicatorOptionList(sessionStorage.getItem("companyId"));
+  }
   $( "#create-indicator-option-button" ).click(function( event ) {
     event.preventDefault();
     createIndicatorOption(sessionStorage.getItem("companyId"), $( "#settings-indicator-option-select-form" ).serializeObject() );
