@@ -34,10 +34,14 @@
 }
 .audit-list-section-1 {
   width: 600px;
-
 }
 
 .audit-list-section {
   width: 100%;
-
+}
+.company-dropdown-select {
+  display: inline-block !important;
+}
+.audit-area-dropdown {
+    display: inline-block !important;
 }

@@ -20,7 +20,7 @@ function registerNewAuditNewEvents() {
 }
 
 function registerSettingsFacilityEvents() {
-    getCompanyList({"active": true });
+    getCompanyList();
 
     $( "#create-facility-button" ).click(function( event ) {
       event.preventDefault();
@@ -49,8 +49,10 @@ function registerSettingsFacilityEvents() {
       emptyTemplateForms();
       emptyIndicatorForms();
       if (companyId > 0) {
+        getCompanyList();
         $( "#update-facility-button" ).show();
         $( "#create-facility-button" ).hide();
+
       } else {
         emptyCompanyForms();
         $( "#update-facility-button" ).hide();

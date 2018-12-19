@@ -109,6 +109,7 @@ function getAuditAreaDetailSuccess(response) {
               sessionStorage.setItem('areaId', data.id);
               break;
           case 'director':
+          console.log(data);
               $(this).val(data.attributes.director.name);
               break;
           case 'specialty-type':
@@ -143,7 +144,7 @@ function getAuditAreaDetailFailure(response) {
 // Update company button functions
 function updateAuditArea(areaId, data) {
   var auditArea = {"name": data.name,
-                   "director": { "name": data.director, "type": 7 },
+                   "director": { "id": 4, "name": data.director, "type": 7 },
                    "manager": { "name": data.manager, "type": 7 },
                    "specialty_type": data['specialty-type'],
                    "clinic_type": data['clinic-type'],

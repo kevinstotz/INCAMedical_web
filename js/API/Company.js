@@ -37,7 +37,7 @@ function deleteCompany(companyId) {
 function deleteCompanySuccess(response) {
   $("#settings-facility-select-form")[0].reset();
   sessionStorage.setItem("companyId", 0);
-  getCompanyList({"active": true });
+  getCompanyList();
 }
 
 function deleteCompanyFailure(response) {
@@ -54,12 +54,12 @@ function updateCompany(data) {
 }
 
 function updateCompanySuccess(response) {
-  getCompanyList({"active": true });
+  getCompanyList();
   console.log(response);
 }
 
 function updateCompanyFailure(response) {
-  getCompanyList({"active": true });
+  getCompanyList();
   console.log(response);
 }
 //---------------------------------------------------//
@@ -75,7 +75,7 @@ function createCompany(data) {
 function createCompanySuccess(response) {
   var data = response.data;
   sessionStorage.setItem("companyId", data.attributes.result);
-  getCompanyList({"active": true });
+  getCompanyList();
 }
 
 function createCompanyFailure(response) {
@@ -88,8 +88,7 @@ function createCompanyFailure(response) {
 // Get Company List button functions
 
 function getCompanyList(options) {
-  var option = "?";
-  if ( options.hasOwnProperty('active') ) { option += "active=" + options.active; }
+  var option = '?active=true';
   API_GET(API_ENDPOINT + API_COMPANY, option, getCompanyListSuccess, getCompanyListFailure, "text");
 }
 
