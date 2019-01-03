@@ -1,4 +1,4 @@
-function field_focus(field, email) {
+  function field_focus(field, email) {
     if (field.value == email) {
       field.value = '';
     }
@@ -20,12 +20,12 @@ function field_focus(field, email) {
       var token = extractToken(document.location.hash);
 
       sessionStorage.setItem('client_id', "WWNbKXczbA5A9oOFTCTv0X98uUjXDsPr19Smsv62");
-      const SECURE = "https://";
-      const INSECURE = "http://";
-      const WEBSITE = INSECURE + 'www.audits.incamedical.com';
-      const API_HOST = INSECURE + 'www.api.incamedical.com';
-      const WEBSITE_PORT = 10101;
-      const API_PORT = 10100;
+      //const SECURE = "https://";
+      //const INSECURE = "http://";
+      //const WEBSITE = INSECURE + 'www.audits.incamedical.com';
+      //const API_HOST = INSECURE + 'www.api.incamedical.com';
+      //const WEBSITE_PORT = 10101;
+      //const API_PORT = 10100;
       const ALLOWED_ORIGIN = WEBSITE + ":" + WEBSITE_PORT.toString();
       const API_VERSION = '/api/v1';
       const API_URI = API_HOST + ':' + API_PORT.toString() + '';

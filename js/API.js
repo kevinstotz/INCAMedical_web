@@ -1,11 +1,10 @@
-const API_PORT = 10100;
-const API_HOST = 'http://api.incamedical.com';
-const WEBSITE = 'audits.incamedical.com';
+const API_PORT = 80;
 const WEBSITE_PORT = 10101;
 const SECURE = 'https://';
 const INSECURE = 'http://';
-const API_HOST = INSECURE + 'www.api.incamedical.com';
-const WEBSITE = INSECURE + 'www.audits.incamedical.com';
+const API_HOST = INSECURE + 'api.incamedical.com';
+//const API_HOST = INSECURE + '172.31.2.86';
+const WEBSITE = INSECURE + 'audits.incamedical.com';
 const ALLOWED_PORT = API_PORT;
 const ALLOWED_ORIGIN = WEBSITE + ':' + ALLOWED_PORT;
 const API_URI = API_HOST + ':' + API_PORT + '/api';
