@@ -165,6 +165,49 @@ function registerHeaderEvents() {
     $('#reports-tabs').hide();
     $('#settings-tabs').hide();
   });
+
+  $('#logout').click(function(event) {
+    var data = "token=" + sessionStorage.getItem('access_token') + "&client_id=" + sessionStorage.getItem('client_id');
+    A_API_POST(AUTHORIZATION_ENDPOINT + "revoke_token/", data, logoutSuccess, logoutFailure, "application/x-www-form-urlencoded");
+    sessionStorage.setItem('client_id', "");
+    sessionStorage.setItem('refresh_token', "");
+    sessionStorage.setItem('access_token', "");
+  });
+}
+
+function A_API_POST(url, data, success, error, dataType) {
+  $.ajax({
+    type: "POST",
+    url: url,
+    data: data,
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader('Authorization', 'Bearer ' + sessionStorage.getItem('access_token'));
+    },
+    xhrFields: {
+    },
+    headers: {
+      "Access-Control-Allow-Origin": ALLOWED_ORIGIN
+    },
+    success: logoutSuccess,
+    error: logoutFailure,
+    contentType:"application/x-www-form-urlencoded; charset=utf-8",
+    crossDomain:true,
+    dataType: dataType
+  });
+  return 0;
+}
+
+function logoutSuccess(result) {
+  console.log("success");
+  console.log(result);
+  window.location.replace(LOGIN_PAGE);
+
+}
+
+function logoutFailure(result) {
+  console.log("failure");
+  console.log(result);
+    window.location.replace(LOGIN_PAGE);
 }
 
 function registerFooterEvents() {

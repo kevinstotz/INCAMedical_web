@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>INCA Medical Password Reset</title>
+      <link href='https://fonts.googleapis.com/css?family=Open+Sans:700,600' rel='stylesheet' type='text/css'>
+      <link href='css/login.css' rel='stylesheet' type='text/css'>
+      <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+   </head>
+   <body>
+      <form method="post" action="javascript:;" accept-charset="utf-8" name="forgot-form" id="reset-password-form" enctype="multipart/form-data">
+         <div class="box">
+            <h1>Reset Password</h1>
+            <label>New Password</label>
+            <input type="password" name="password" value="Password" onFocus="field_focus(this, 'Password');" onblur="field_blur(this, 'Password');" class="email" />
+            <label>Confirm New Password</label>
+            <input type="password" name="confirm_password" value="Confirm Password" onFocus="field_focus(this, 'Confirm Password');" onblur="field_blur(this, 'Confirm Password');" class="email" />
+            <a href="#" id="reset-password">
+               <div class="btn">Reset Password</div>
+            </a>
+         </div>
+      </form>
+      <script src="js/login.js"></script>
+   </body>
+</html>

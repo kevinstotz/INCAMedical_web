@@ -102,7 +102,9 @@ function getCompanyListSuccess(response) {
 }
 
 function getCompanyListFailure(response) {
-  console.log(response);
+  if (isAuthorized(response)) {
+    console.log(response);
+  }
 }
 //---------------------------------------------------//
 

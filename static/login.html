@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>INCA Medical Login</title>
+      <link href='https://fonts.googleapis.com/css?family=Open+Sans:700,600' rel='stylesheet' type='text/css'>
+      <link href='css/login.css' rel='stylesheet' type='text/css'>
+      <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+   </head>
+   <body>
+      <form method="post" action="javascript:;" accept-charset="utf-8" class="form input-group-md" name="login-form" id="login-form" enctype="multipart/form-data">
+         <div class="box">
+            <h1>Login</h1>
+            <input type="email" name="username" value="email" onFocus="field_focus(this, 'email');" onblur="field_blur(this, 'email');" class="email" />
+            <input type="password" name="password" value="password" onFocus="field_focus(this, 'password');" onblur="field_blur(this, 'password');" class="email" />
+            <input type="hidden" name="response_type" value="token" />
+            <a id="login-link" href="login.html">
+               <div class="btn">Sign In</div>
+            </a>
+            <a href="register.html">
+               <div id="btn2">Sign Up</div>
+            </a>
+         </div>
+      </form>
+      <p><a href="forgot.html">Forgot your password?</a></p>
+      <script src="js/login.js"></script>
+   </body>
+</html>

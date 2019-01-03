@@ -73,6 +73,7 @@ function getSpecialtyTypeListSuccess(response) {
 }
 
 function getSpecialtyTypeListFailure(response) {
+  console.log("failure");
   console.log(response);
 }
 //---------------------------------------------------//

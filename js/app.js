@@ -13,7 +13,9 @@ $.fn.isInSession = function(variable) {
 }
 
 $( document ).ready(function() {
-
+  if (sessionStorage.getItem("access_token") == "") {
+    window.location.href = LOGIN_PAGE;
+  }
     if ( !$(this).isInSession(sessionStorage.getItem("companyId")) ) {
       sessionStorage.setItem("companyId", 0);
     }
