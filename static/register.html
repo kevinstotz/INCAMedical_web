@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>INCA Medical Register</title>
+      <link href='https://fonts.googleapis.com/css?family=Open+Sans:700,600' rel='stylesheet' type='text/css'>
+      <link href='css/login.css' rel='stylesheet' type='text/css'>
+      <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+   </head>
+   <body>
+      <form method="post" action="javascript:;" accept-charset="utf-8" class="form input-group-md" name="register-form" id="register-form" enctype="multipart/form-data">
+         <div class="box">
+            <h1>Register</h1>
+            <input type="text" name="firstname" value="First Name" onFocus="field_focus(this, 'First Name');" onblur="field_blur(this, 'First Name');" class="email" />
+            <input type="text" name="lastname" value="Last Name" onFocus="field_focus(this, 'Last Name');" onblur="field_blur(this, 'Last Name');" class="email" />
+            <input type="email" name="email" value="Email" onFocus="field_focus(this, 'Email');" onblur="field_blur(this, 'Email');" class="email" />
+            <input type="password" name="password" value="Password" onFocus="field_focus(this, 'Password');" onblur="field_blur(this, 'Password');" class="email" />
+            <input type="password" name="confirm_password" value="Confirm Password" onFocus="field_focus(this, 'Confirm Password');" onblur="field_blur(this, 'Confirm Password');" class="email" />
+            <a href="login.html">
+               <div class="btn">Sign In</div>
+            </a>
+            <a href="register.html" id="register-link" >
+               <div id="btn2">Sign Up</div>
+            </a>
+         </div>
+      </form>
+      <p><a href="forgot.html">Forgot your password?</a></p>
+      <script src="js/login.js"></script>
+   </body>
+</html>

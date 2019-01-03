@@ -212,9 +212,9 @@ function uploadAuditIndicatorImage(auditId, auditIndicatorId, image) {
 }
 
 function uploadAuditIndicatorImageSuccess(response, params) {
-  console.log(response.data.attributes.result)
-  fields = $.parseJSON(response.data.attributes.result);
-  $( "#audit-indicator-" + params + " .audit-indicator-upload").append(insertAuditIndicatorUpload(fields.name));
+  console.log(response.data);
+  fields = JSON.parse(response.data.attributes.result);
+  $( "#audit-indicator-" + params + " .audit-indicator-upload").append(insertAuditIndicatorUpload(fields.file_url));
   $( '#audit-indicator-image-upload-modal' ).modal("toggle");
 }
 
@@ -400,6 +400,7 @@ function displayCategoryTree(categories) {
       for (var indicator in categories[category].indicators) {
         if (categories[category].indicators[indicator].parent != "#")  {
           if ( $("#" + "audits-table-" + categories[category].indicators[indicator].parent).length == 0 ) {
+            console.log(categories[category].indicators[indicator]);
             $("#" + "audits-category-pane-div-" + categories[category].indicators[indicator].parent).append(categoryTableTemplate(categories[category].indicators[indicator].parent));
           }
           $("#" + "audits-table-" + categories[category].indicators[indicator].parent).append(fillAuditIndicatorRow(categories[category].indicators[indicator]));
@@ -518,7 +519,7 @@ function getAuditDetail(auditId) {
 }
 
 function getAuditDetailSuccess(response) {
-  loadAuditTabs(response.data);
+    loadAuditTabs(response.data);
 }
 
 function getAuditDetailFailure(response) {

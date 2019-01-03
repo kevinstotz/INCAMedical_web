@@ -31,7 +31,7 @@ function loadAuditAreaSelect(data) {
 //---------------------------------------------------//
 // Get Audit Area Detail button functions
 function getAuditAreaDetail(auditAreaId) {
-  API_GET(API_ENDPOINT + API_AUDIT_AREA, auditAreaId + "/", getAuditAreaDetailSuccess, getAuditAreaDetailFailure, "text");
+  API_GET(API_ENDPOINT + API_AUDIT_AREA, auditAreaId + "/", getAuditAreaDetailSuccess, getAuditAreaDetailFailure, "json");
 }
 
 
@@ -98,7 +98,7 @@ function getAuditAreaListFailure(response) {
 
 function getAuditAreaDetailSuccess(response) {
   var data = {};
-  data = parseResponse(response);
+  data = response.data;
 
   $('#settings-audit-area-form :input').each(function() {
 
@@ -109,14 +109,13 @@ function getAuditAreaDetailSuccess(response) {
               sessionStorage.setItem('areaId', data.id);
               break;
           case 'director':
-          console.log(data);
               $(this).val(data.attributes.director.name);
               break;
           case 'specialty-type':
-              $(this).val(data.relationships.specialty_type.data.id);
+              $(this).val(data.attributes.specialty_type.id);
               break;
           case 'clinic-type':
-              $(this).val(data.relationships.clinic_type.data.id);
+              $(this).val(data.attributes.clinic_type.id);
               break;
           case 'manager':
               $(this).val(data.attributes.manager.name);
