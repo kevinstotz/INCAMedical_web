@@ -1,7 +1,6 @@
 require('dotenv').config();
-var path = require('path');
+const path = require('path');
 const config = require('./config');
-
 var express = require('express');
 const app = express();
 const prod = config.getProperties('prod');

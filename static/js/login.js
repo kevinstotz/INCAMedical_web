@@ -18,27 +18,6 @@
   $(document).ready(function() {
 
       var token = extractToken(document.location.hash);
-
-      sessionStorage.setItem('client_id', "WWNbKXczbA5A9oOFTCTv0X98uUjXDsPr19Smsv62");
-      sessionStorage.setItem('client_id', "7kKgjnaSGk1FWnGcEH2EgWki6SMT7wf9CQqtj52A");
-      //const SECURE = "https://";
-      //const INSECURE = "http://";
-      //const WEBSITE = INSECURE + 'www.audits.incamedical.com';
-      //const API_HOST = INSECURE + 'www.api.incamedical.com';
-      //const WEBSITE_PORT = 10101;
-      //const API_PORT = 10100;
-      const ALLOWED_ORIGIN = WEBSITE + ":" + WEBSITE_PORT.toString();
-      const API_VERSION = '/api/v1';
-      const API_URI = API_HOST + ':' + API_PORT.toString() + '';
-      const API_ENDPOINT = API_URI;
-      const redirectURI = 'http://audits.incamedical.com/';
-      const API_USER_LOGIN = '/accounts/login/';
-      const LOGIN_PAGE = "/static/login.html";
-      const DASHBOARD_PAGE = "/";
-      const API_USER_REGISTER = API_VERSION + '/register/';
-      const API_USER_RESET_PASSWORD = API_VERSION + '/reset-password/';
-      const API_USER_FORGOT_PASSWORD = API_VERSION + '/forgot-password/';
-
       function API_UPDATE_LOGIN(url, data, success, error, dataType) {
 
         $.ajax({
@@ -110,7 +89,7 @@
       }
 
       function  user_login(login_details) {
-        API_POST_LOGIN(API_ENDPOINT + API_USER_LOGIN, login_details, userLoginSuccess, userLoginFailure, "json");
+        API_POST_LOGIN(API_HOST + API_USER_LOGIN, login_details, userLoginSuccess, userLoginFailure, "json");
       }
 
       function userLoginSuccess(result) {

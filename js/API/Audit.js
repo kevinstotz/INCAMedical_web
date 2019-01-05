@@ -212,7 +212,6 @@ function uploadAuditIndicatorImage(auditId, auditIndicatorId, image) {
 }
 
 function uploadAuditIndicatorImageSuccess(response, params) {
-  console.log(response.data);
   fields = JSON.parse(response.data.attributes.result);
   $( "#audit-indicator-" + params + " .audit-indicator-upload").append(insertAuditIndicatorUpload(fields.file_url));
   $( '#audit-indicator-image-upload-modal' ).modal("toggle");
