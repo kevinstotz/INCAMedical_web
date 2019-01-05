@@ -33,6 +33,7 @@ const API_TEMPLATE_CATEGORY = '/template-category/';
 const API_TEMPLATE_INDICATOR = '/template-indicator/';
 const API_AUDIT_CATEGORY = '/audit-category/';
 const API_AUDIT_INDICATOR = '/audit-indicator/';
+const API_USER = '/user/';
 const API_AUDIT_INDICATOR_ANSWER = '/audit-indicator-option/';
 const API_AUDIT_INDICATOR_NOTE = '/audit-indicator-note/';
 const API_CATEGORY = '/category/';
