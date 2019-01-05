@@ -1,12 +1,12 @@
-//const API_PORT = 80;
-const API_PORT = 10100;
-const WEBSITE_PORT = 10101;
+const API_PORT = 80;
+//const API_PORT = 10100;
+const WEBSITE_PORT = 80;
 const SECURE = 'https://';
 const INSECURE = 'http://';
-const API_HOST = INSECURE + 'www.api.incamedical.com' + ':' + API_PORT.toString();
-// const API_HOST = INSECURE + '172.31.2.86';
-// const WEBSITE = INSECURE + 'audits.incamedical.com';
-const WEBSITE = INSECURE + 'www.www.incamedical.com';
+//const API_HOST = INSECURE + 'www.api.incamedical.com' + ':' + API_PORT.toString();
+const API_HOST = INSECURE + 'api.incamedical.com';
+const WEBSITE = INSECURE + 'audits.incamedical.com';
+//const WEBSITE = INSECURE + 'www.www.incamedical.com';
 const ALLOWED_PORT = API_PORT;
 const ALLOWED_ORIGIN = WEBSITE + ':' + ALLOWED_PORT.toString();
 const API_URI = API_HOST + '/api';
@@ -47,8 +47,8 @@ const DASHBOARD_PAGE = "/";
 const API_USER_RESET_PASSWORD = API_VERSION + '/reset-password/';
 const API_USER_FORGOT_PASSWORD = API_VERSION + '/forgot-password/';
 
-sessionStorage.setItem('client_id', "7kKgjnaSGk1FWnGcEH2EgWki6SMT7wf9CQqtj52A");
 sessionStorage.setItem('client_id', "WWNbKXczbA5A9oOFTCTv0X98uUjXDsPr19Smsv62");
+sessionStorage.setItem('client_id', "7kKgjnaSGk1FWnGcEH2EgWki6SMT7wf9CQqtj52A");
 
 var token = sessionStorage.getItem('access_token');
 var token_type = sessionStorage.getItem('token_type');
