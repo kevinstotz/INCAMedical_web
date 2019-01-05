@@ -39,8 +39,8 @@
          registerReportsReportEvents();
          }); });
       </script>
-      <script>$(function(){ $("#settings-add-user-pane").load("includes/settings/settings-add-user.html", function() {
-         registerSettingsAddUserEvents();
+      <script>$(function(){ $("#settings-user-pane").load("includes/settings/settings-user.html", function() {
+         registerSettingsUserEvents();
          }); });
       </script>
       <script>$(function(){ $("#settings-area-pane").load("includes/settings/settings-audit-area.html", function() {
@@ -79,6 +79,7 @@
       <script src="dist/jstree/jstree.js"></script>
       <script src="js/API.js"></script>
       <script src="js/API/Note.js"></script>
+      <script src="js/API/User.js"></script>
       <script src="js/API/Audit.js"></script>
       <script src="js/API/AuditArea.js"></script>
       <script src="js/API/IndicatorType.js"></script>
@@ -111,8 +112,8 @@
             </div>
             <div id="settings-tabs" class="vertical-tab settings-tabs"  role="tabpanel">
                <ul class="nav nav-tabs" role="tablist">
-                 <li id="section-settings-add-user" role="presentation">
-                    <a href="#settings-add-user-pane" aria-controls="section-settings-add-user" role="tab" data-toggle="tab">Users</a>
+                 <li id="section-settings-user" role="presentation">
+                    <a href="#settings-user-pane" aria-controls="section-settings-user" role="tab" data-toggle="tab">Users</a>
                  </li>
                   <li id="section-settings-facility" role="presentation" class="active">
                      <a href="#settings-facility-pane" aria-controls="section-settings-facility" role="tab" data-toggle="tab">Facilities</a>
@@ -140,7 +141,7 @@
                   </li>
                </ul>
                <div class="tab-content tabs settings-tabs">
-                  <div role="tabpanel" class="tab-pane fade" id="settings-add-user-pane"></div>
+                  <div role="tabpanel" class="tab-pane fade" id="settings-user-pane"></div>
                   <div role="tabpanel" class="tab-pane fade in active" id="settings-facility-pane"></div>
                   <div role="tabpanel" class="tab-pane fade" id="settings-specialty-type-pane"></div>
                   <div role="tabpanel" class="tab-pane fade" id="settings-clinic-type-pane"></div>
