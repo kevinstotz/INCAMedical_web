@@ -19,6 +19,9 @@ function registerNewAuditNewEvents() {
 
 }
 
+function registerSettingsAddUserEvents() {
+  
+}
 function registerSettingsFacilityEvents() {
     getCompanyList();
 

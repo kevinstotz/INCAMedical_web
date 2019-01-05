@@ -15,7 +15,6 @@ function insertIndicatorImage(id, url) {
 }
 
 function loadIndicatorTable(data) {
-  console.log("loaded");
   emptyIndicatorForms();
   var rows = "";
   var selected = "";
