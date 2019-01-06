@@ -1,19 +1,5 @@
-const API_PORT = 80;
-//const API_PORT = 10100;
-const WEBSITE_PORT = 80;
-const SECURE = 'https://';
-const INSECURE = 'http://';
-//const API_HOST = INSECURE + 'www.api.incamedical.com' + ':' + API_PORT.toString();
-const API_HOST = INSECURE + 'api.incamedical.com';
-const WEBSITE = INSECURE + 'audits.incamedical.com';
-//const WEBSITE = INSECURE + 'www.www.incamedical.com';
-const ALLOWED_PORT = API_PORT;
-const ALLOWED_ORIGIN = WEBSITE + ':' + ALLOWED_PORT.toString();
-const API_URI = API_HOST + '/api';
-const WEBSITE_URL = WEBSITE + ':' + WEBSITE_PORT.toString();
-const API_VERSION = '/v1';
+const LOGIN_PAGE = '/static/login.html';
 const API_COMPANY = '/company/';
-const LOGIN_PAGE = "/static/login.html";
 const API_COMPANY_CREATE = '/company/create/';
 const API_AUDIT = '/audit/';
 const API_AUDIT_CREATE = '/audit/create/';
@@ -40,17 +26,12 @@ const API_AUDIT_INDICATOR_NOTE = '/audit-indicator-note/';
 const API_CATEGORY = '/category/';
 const API_INDICATOR = '/indicator/';
 const API_INDICATOR_CREATE = '/indicator/create';
-const API_ENDPOINT = API_URI + API_VERSION;
-const AUTHORIZATION_ENDPOINT = API_HOST + "/o/";
-const redirectURI = WEBSITE_URL;
-const API_USER_LOGIN = '/accounts/login/';
+
+
 const DASHBOARD_PAGE = "/";
 
 const API_USER_RESET_PASSWORD = API_VERSION + '/reset-password/';
 const API_USER_FORGOT_PASSWORD = API_VERSION + '/forgot-password/';
-
-sessionStorage.setItem('client_id', "WWNbKXczbA5A9oOFTCTv0X98uUjXDsPr19Smsv62");
-sessionStorage.setItem('client_id', "7kKgjnaSGk1FWnGcEH2EgWki6SMT7wf9CQqtj52A");
 
 var token = sessionStorage.getItem('access_token');
 var token_type = sessionStorage.getItem('token_type');

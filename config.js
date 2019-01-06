@@ -31,6 +31,36 @@ const config = convict({
       default: '127.0.0.1',
       arg: 'web-endpont',
       env: 'WEB_ENDPOINT'
+    },
+    api_version: {
+      format: String,
+      default: 'v1',
+      arg: 'api-version',
+      env: 'API_VERSION'
+    },
+    api_path: {
+      format: String,
+      default: '/api',
+      arg: 'api-path',
+      env: 'API_PATH'
+    },
+    secure: {
+      format: String,
+      default: 'https://',
+      arg: 'secure',
+      env: 'SECURE'
+    },
+    insecure: {
+      format: String,
+      default: 'http://',
+      arg: 'insecure',
+      env: 'INSECURE'
+    },
+    client_id: {
+      format: String,
+      default: '000',
+      arg: 'client-id',
+      env: 'CLIENT_ID'
     }
 });
 

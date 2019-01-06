@@ -1,7 +1,12 @@
 // config/prod.json
 {
+  "api_version": "/v1",
+  "api_path": "/api",
+  "secure": "https://",
+  "insecure": "http://",
   "api_port": 10100,
   "api_endpoint": "api.incamedical.com",
   "web_port": 10101,
-  "web_endpoint": "www.incamedical.com"
+  "web_endpoint": "www.incamedical.com",
+  "client_id": "7kKgjnaSGk1FWnGcEH2EgWki6SMT7wf9CQqtj52A"
 }

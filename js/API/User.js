@@ -99,10 +99,11 @@ function deleteUser(userId) {
 }
 
 function deleteUserSuccess(response) {
-
+  getUserList(sessionStorage.getItem("companyId"));
 }
 
 function deleteUserFailure(response) {
+  getUserList(sessionStorage.getItem("companyId"));
   console.log(response);
 }
 //---------------------------------------------------//

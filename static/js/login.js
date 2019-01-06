@@ -14,9 +14,34 @@
         var match = hash.match(/access_token=([\w-]+)/);
         return !!match && match[1];
   }
+  async function wrapp() {
+    let response = await fetch("/config/global.json")
+        .then(dataWrappedByPromise => dataWrappedByPromise.json())
+        .then(data => {
+            client_id = data.client_id;
+            sessionStorage.setItem("client_id", client_id);
+            API_HOST =  data.api_endpoint;
+            API_PORT = data.api_port;
+            API_BASE_URL = data.insecure + API_HOST + ':' + API_PORT.toString()
+            //API_URI = '/api' + API_VERSION;
+            //API_ENDPOINT = API_BASE_URL + API_URI;
+            AUTHORIZATION_ENDPOINT = API_BASE_URL + "/o/";
+
+            WEBSITE_HOST = data.web_endpoint;
+            WEBSITE_PORT = data.web_port;
+            WEBSITE_URI = '';
+            WEBSITE_ENDPOINT = data.insecure + WEBSITE_HOST + ':' + WEBSITE_PORT.toString() + WEBSITE_URI;
+
+            ALLOWED_ORIGIN = WEBSITE_HOST + ':' + API_PORT.toString();
+          });
+    };
+    wrapp();
 
   $(document).ready(function() {
-
+      const LOGIN_PAGE = '/static/login.html';
+      const redirectURI = WEBSITE_ENDPOINT;
+      const API_USER_LOGIN = '/accounts/login/';
+      const DASHBOARD_PAGE = WEBSITE_ENDPOINT;
       var token = extractToken(document.location.hash);
       function API_UPDATE_LOGIN(url, data, success, error, dataType) {
 
@@ -89,7 +114,7 @@
       }
 
       function  user_login(login_details) {
-        API_POST_LOGIN(API_HOST + API_USER_LOGIN, login_details, userLoginSuccess, userLoginFailure, "json");
+        API_POST_LOGIN(API_BASE_URL + API_USER_LOGIN, login_details, userLoginSuccess, userLoginFailure, "json");
       }
 
       function userLoginSuccess(result) {
