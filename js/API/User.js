@@ -1,17 +1,44 @@
 
+
+function loadRoleSelect(role) {
+  var options = '<option value="0">Select Role</option>';
+  var selected = "";
+
+  for (var item in ROLE_LIST) {
+      if (role == ROLE_LIST[item].id) { selected = "selected"; }
+      options += '<option ' + selected + ' value=' + ROLE_LIST[item].id + '>' + ROLE_LIST[item].attributes['role'] + '</option>';
+      selected = "";
+  }
+
+  return options;
+}
+
+
+function buildRoleSelect(role) {
+  var row = "";
+
+  row += '<select class="form-control settings-user-form-select-role" id="settings-user-form-select-role" name="settings-user-form-select-role">';
+  row += loadRoleSelect(role);
+  row += '</select>';
+
+  return row;
+}
+
 function loadUserTable(data) {
   var row = "";
 
   row += '<tr>';
-  row += '<td><input placeholder="Add User" class="" size="73" type="text" id="settings-user-form-input-name" name="add" value="" />';
+  row += '<td><input placeholder="Add User" class="" size="57" type="text" id="settings-user-form-input-name" name="add" value="" />';
   row += '<button class="add-user" value="0"><i class="fas fa-plus "></i></button></td>';
-  row += '<td colspan="2"></td>';
+  row += '<td colspan="5"></td>';
   row += '</tr>';
 
   $.each(data, function(i, item) {
-      row += '<tr id="user-' + item.id + '">';
+      row += '<tr data-id="' + item.id + '">';
       row += '<td>' + item.attributes.email + '</td>';
-      row += '<td>' + item.attributes.last_login + '</td>';
+      row += '<td data-id=' + item.attributes.role.id + '>' + buildRoleSelect(item.attributes.role.id) + '</td>';
+      row += '<td data-id=' + item.attributes.status.id + '>' + item.attributes.status.status + '</td>';
+      row += '<td>' + formatDate(new Date(item.attributes.last_login)) + '</td>';
       row += '<td><button class="active-user" value="' + item.id + '" name="is_active"><i class="fas ' + ( ( 1 == item.attributes.is_active ) ? " fa-toggle-on ": " fa-toggle-off " ) + ' fa-2x"></i></button></td>';
       row += '<td><button class="delete-user" value="' + item.id + '"><i class="fas fa-trash fa-2x"></i></button></td>';
       row += '</tr>';
@@ -28,8 +55,8 @@ function loadUserTable(data) {
 
   $( "button.add-user" ).click(function(event) {
       event.preventDefault();
-      var type = $("#settings-user-form-input-name").val();
-      createUser(type);
+      var email = $("#settings-user-form-input-name").val();
+      createUser(email);
   });
 
   $( "button.active-user" ).click(function(event) {
@@ -45,20 +72,6 @@ function loadUserTable(data) {
   });
 }
 
-function loadUserSelect(data) {
-  var options = '<option value="0">Select Area Type</option>';
-  var userId = sessionStorage.getItem('userId');
-  var selected = "";
-  //$("#settings-audit-area-form-select-user")[0].reset();
-
-  for (var item in data) {
-      if (userId == data[item].id) { selected = "selected"; }
-      options += '<option ' + selected + ' value=' + data[item].id + '>' + data[item].attributes['type'] + '</option>';
-      selected = "";
-  }
-
-  $( "#settings-audit-area-form-select-user" ).find('option').remove().end().append(options)
-}
 
 //---------------------------------------------------//
 // Get User List button functions
@@ -68,9 +81,8 @@ function getUserList(companyId) {
 }
 
 function getUserListSuccess(response) {
-  console.log(response);
   loadUserTable(parseResponse(response));
-  loadUserSelect(parseResponse(response));
+  //loadRoleSelect(ROLE_LIST);
 }
 
 function getUserListFailure(response) {
@@ -114,9 +126,9 @@ function updateUserFailure(response) {
 //---------------------------------------------------//
 // Create User button functions
 
-function createUser(type) {
-  var user = { "type": type, "company": sessionStorage.getItem("companyId") };
-  API_POST(API_ENDPOINT + API_CLINIC_TYPE, user, createUserSuccess, createUserFailure, "json");
+function createUser(email) {
+  var user = { "email": email, "password": "password", "confirm_password": "password", "firstname": "", "lastname": ""  };
+  API_POST(API_ENDPOINT + API_USER_REGISTER, user, createUserSuccess, createUserFailure, "json");
 }
 
 function createUserSuccess(response) {

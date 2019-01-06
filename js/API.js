@@ -19,6 +19,7 @@ const API_AUDIT = '/audit/';
 const API_AUDIT_CREATE = '/audit/create/';
 const API_AUDIT_AREA = '/audit-area/';
 const API_CLINIC_TYPE = '/clinic-type/';
+const API_ROLE = '/role/';
 const API_INDICATOR_TYPE = '/indicator-type/';
 const API_INDICATOR_OPTION = '/indicator-option/';
 const API_SPECIALTY_TYPE = '/specialty-type/';
@@ -93,7 +94,7 @@ function API_POST(url, data, success, error, dataType) {
     headers: {
       'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
       'Accept': 'application/vnd.api+json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json; charset=utf-8'
     },
     success: success,
     error: error,
