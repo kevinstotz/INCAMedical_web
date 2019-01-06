@@ -1,6 +1,7 @@
 
 var INDICATOR_OPTIONS_LIST = {};
 var INDICATOR_TYPE_LIST = {};
+var ROLE_LIST = {};
 
 $.fn.isInSession = function(variable) {
   if ( (sessionStorage.getItem(variable) === null) ||

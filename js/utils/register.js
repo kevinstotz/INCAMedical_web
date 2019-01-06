@@ -20,6 +20,7 @@ function registerNewAuditNewEvents() {
 }
 
 function registerSettingsUserEvents() {
+  getRoleList();
   getUserList();
 }
 
