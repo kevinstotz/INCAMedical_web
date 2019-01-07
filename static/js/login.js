@@ -196,6 +196,7 @@ var API_URI = "";
       function forgotPasswordSuccess(result) {
         console.log("success");
         console.log(result);
+        window.location.href = LOGIN_PAGE;
       }
 
       function forgotPasswordFailure(result) {
@@ -204,6 +205,7 @@ var API_URI = "";
         sessionStorage.setItem('refresh_token', "");
         sessionStorage.setItem('token_type', "");
         console.log(result);
+        window.location.href = LOGIN_PAGE;
       }
 
       function forgot_password(forgot_password_details) {
