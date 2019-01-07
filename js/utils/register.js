@@ -223,7 +223,7 @@ function registerFooterEvents() {
 
 function registerSettingsIndicatorOptionsEvents() {
   if (sessionStorage.getItem("companyId") > 0 ) {
-    getIndicatorOptionList(sessionStorage.getItem("companyId"));
+    ///getIndicatorOptionList(sessionStorage.getItem("companyId"));
   }
   $( "#create-indicator-option-button" ).click(function( event ) {
     event.preventDefault();
@@ -266,7 +266,7 @@ function registerAuditsAuditsEvents() {
   $('#section-audits-audits-tablist').show();
   if (sessionStorage.getItem("companyId") > 0 ) {
     sessionStorage.setItem("auditId", 0);
-    getAuditList({"active" : true, "company": sessionStorage.getItem("companyId") });
+    //getAuditList({"active" : true, "company": sessionStorage.getItem("companyId") });
   }
 
   $( "#create-new-audit-button" ).click(function( event ) {
@@ -400,8 +400,8 @@ function registerSettingsIndicatorEvents() {
 
 function registerSettingsAuditAreaEvents() {
   if (sessionStorage.getItem("companyId") > 0 ) {
-    getSpecialtyTypeList(sessionStorage.getItem("companyId"));
-    getClinicTypeList(sessionStorage.getItem("companyId"));
+    //getSpecialtyTypeList(sessionStorage.getItem("companyId"));
+    //getClinicTypeList(sessionStorage.getItem("companyId"));
   }
   $( "#create-audit-area-button" ).click(function( event ) {
     event.preventDefault();

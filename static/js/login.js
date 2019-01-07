@@ -16,7 +16,9 @@
   }
 var WEBSITE_ENDPOINT = "";
 var redirectURI = "";
+var API_VERSION = "/v1";
 var ALLOWED_ORIGIN = "";
+var API_URI = "";
   async function wrapp() {
     let response = await fetch("/config/global.json")
         .then(dataWrappedByPromise => dataWrappedByPromise.json())
@@ -27,7 +29,7 @@ var ALLOWED_ORIGIN = "";
             API_HOST =  data.api_endpoint;
             API_PORT = data.api_port;
             API_BASE_URL = data.insecure + API_HOST + ':' + API_PORT.toString()
-            //API_URI = '/api' + API_VERSION;
+            API_URI = '/api' + API_VERSION;
             //API_ENDPOINT = API_BASE_URL + API_URI;
             AUTHORIZATION_ENDPOINT = API_BASE_URL + "/o/";
 
@@ -39,7 +41,6 @@ var ALLOWED_ORIGIN = "";
             }
             WEBSITE_URI = '';
             WEBSITE_ENDPOINT = data.insecure + WEBSITE_HOST + WEBSITE_PORT.toString() + WEBSITE_URI;
- console.log(WEBSITE_ENDPOINT);
             ALLOWED_ORIGIN = WEBSITE_HOST;
           });
     };
@@ -163,7 +164,7 @@ var ALLOWED_ORIGIN = "";
       });
 
       function user_register(register_details) {
-        API_POST_LOGIN(API_ENDPOINT + API_USER_REGISTER, register_details, userRegisterSuccess, userRegisterFailure, "json");
+        API_POST_LOGIN(API_BASE_URL + API_URI + API_USER_REGISTER, register_details, userRegisterSuccess, userRegisterFailure, "json");
       }
 
       function userRegisterSuccess(result) {
@@ -206,7 +207,7 @@ var ALLOWED_ORIGIN = "";
       }
 
       function forgot_password(forgot_password_details) {
-        API_GET_LOGIN(API_URI + API_USER_FORGOT_PASSWORD, "?email=" + forgot_password_details, forgotPasswordSuccess, forgotPasswordFailure, "json");
+        API_GET_LOGIN(API_BASE_URL + API_URI + API_USER_FORGOT_PASSWORD, "?email=" + forgot_password_details, forgotPasswordSuccess, forgotPasswordFailure, "json");
       }
 
       $('#forgot-password').click(function(event) {
@@ -246,7 +247,7 @@ var ALLOWED_ORIGIN = "";
       }
 
       function reset_password(uuid, reset_password_details) {
-        API_UPDATE_LOGIN(API_URI + API_USER_RESET_PASSWORD + uuid + "/", reset_password_details, resetPasswordSuccess, resetPasswordFailure, "application/json");
+        API_UPDATE_LOGIN(API_BASE_URL + API_URI + API_USER_RESET_PASSWORD + uuid + "/", reset_password_details, resetPasswordSuccess, resetPasswordFailure, "application/json");
       }
 
       $('#reset-password').click(function(event) {

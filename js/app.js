@@ -71,6 +71,10 @@ async function wrapp() {
   getUserList();
   getCompanyList();
 getTemplateCategoryList(sessionStorage.getItem("companyId"), sessionStorage.getItem("templateId"));
+getAuditList({"active" : true, "company": sessionStorage.getItem("companyId") });
+    getSpecialtyTypeList(sessionStorage.getItem("companyId"));
+    getClinicTypeList(sessionStorage.getItem("companyId"));
+getIndicatorOptionList(sessionStorage.getItem("companyId"));
             });
           });
 

@@ -1,4 +1,5 @@
 const LOGIN_PAGE = '/static/login.html';
+var API_VERSION ='/v1';
 const API_COMPANY = '/company/';
 const API_COMPANY_CREATE = '/company/create/';
 const API_AUDIT = '/audit/';
@@ -30,8 +31,8 @@ const API_INDICATOR_CREATE = '/indicator/create';
 
 const DASHBOARD_PAGE = "/";
 
-const API_USER_RESET_PASSWORD = API_VERSION + '/reset-password/';
-const API_USER_FORGOT_PASSWORD = API_VERSION + '/forgot-password/';
+const API_USER_RESET_PASSWORD = '/reset-password/';
+const API_USER_FORGOT_PASSWORD = '/forgot-password/';
 
 var token = sessionStorage.getItem('access_token');
 var token_type = sessionStorage.getItem('token_type');
