@@ -84,6 +84,7 @@ wrapp();
   }
 
   $( document ).ready(function() {
+      const LOGIN_PAGE = '/static/login.html';
       if (sessionStorage.getItem("access_token") == "") {
         window.location.href = LOGIN_PAGE;
       }

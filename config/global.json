@@ -1,1 +1,1 @@
-{"secure":"https://","insecure":"http://","web_port":10101,"web_endpoint":"www.www.incamedical.com","api_port":10100,"api_endpoint":"www.api.incamedical.com","client_id":"WWNbKXczbA5A9oOFTCTv0X98uUjXDsPr19Smsv62"}
+{"secure":"https://","insecure":"http://","web_port":80,"web_endpoint":"audits.incamedical.com","api_port":80,"api_endpoint":"api.incamedical.com","client_id":"7kKgjnaSGk1FWnGcEH2EgWki6SMT7wf9CQqtj52A","node_port":10101}

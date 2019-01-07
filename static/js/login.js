@@ -14,10 +14,14 @@
         var match = hash.match(/access_token=([\w-]+)/);
         return !!match && match[1];
   }
+var WEBSITE_ENDPOINT = "";
+var redirectURI = "";
+var ALLOWED_ORIGIN = "";
   async function wrapp() {
     let response = await fetch("/config/global.json")
         .then(dataWrappedByPromise => dataWrappedByPromise.json())
         .then(data => {
+
             client_id = data.client_id;
             sessionStorage.setItem("client_id", client_id);
             API_HOST =  data.api_endpoint;
@@ -28,20 +32,23 @@
             AUTHORIZATION_ENDPOINT = API_BASE_URL + "/o/";
 
             WEBSITE_HOST = data.web_endpoint;
-            WEBSITE_PORT = data.web_port;
+ 	    if (data.web_port == 80) { 
+              WEBSITE_PORT = ""; 
+	    } else {
+              WEBSITE_PORT = ":" + data.web_port;
+            }
             WEBSITE_URI = '';
-            WEBSITE_ENDPOINT = data.insecure + WEBSITE_HOST + ':' + WEBSITE_PORT.toString() + WEBSITE_URI;
-
-            ALLOWED_ORIGIN = WEBSITE_HOST + ':' + API_PORT.toString();
+            WEBSITE_ENDPOINT = data.insecure + WEBSITE_HOST + WEBSITE_PORT.toString() + WEBSITE_URI;
+ console.log(WEBSITE_ENDPOINT);
+            ALLOWED_ORIGIN = WEBSITE_HOST;
           });
     };
     wrapp();
 
   $(document).ready(function() {
       const LOGIN_PAGE = '/static/login.html';
-      const redirectURI = WEBSITE_ENDPOINT;
       const API_USER_LOGIN = '/accounts/login/';
-      const DASHBOARD_PAGE = WEBSITE_ENDPOINT;
+      
       var token = extractToken(document.location.hash);
       function API_UPDATE_LOGIN(url, data, success, error, dataType) {
 
@@ -67,7 +74,7 @@
       }
 
       function API_POST_LOGIN(url, data, success, error, dataType) {
-
+	console.log(data);
         $.ajax({
           type: "POST",
           url: url,
@@ -78,7 +85,7 @@
           xhrFields: {
           },
           headers: {
-            "Access-Control-Allow-Origin": ALLOWED_ORIGIN
+            "Access-Control-Allow-Origin": '*'
           },
           success: success,
           error: error,
@@ -124,7 +131,7 @@
           sessionStorage.setItem('access_token', result.data['access_token']);
           sessionStorage.setItem('refresh_token', result.data['refresh_token']);
           sessionStorage.setItem('token_type', result.data['token_type']);
-          window.location.href = DASHBOARD_PAGE;
+          window.location.href = WEBSITE_ENDPOINT;
         }
       }
 
@@ -148,10 +155,9 @@
         });
 
         login_details += "client_id" + "=" + sessionStorage.getItem('client_id');
-        login_details += "&redirect_uri" + "=" + redirectURI;
+        login_details += "&redirect_uri" + "=" + WEBSITE_ENDPOINT;
         login_details += "&scope" + "=" + {'read': 'Read scope'};
         login_details += "&response_type" + "=" + "token";
-
         user_login(login_details);
 
       });

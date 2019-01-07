@@ -13,7 +13,8 @@ var global_json = {
   "web_endpoint": config.getProperties().web_endpoint,
   "api_port" : config.getProperties().api_port,
   "api_endpoint": config.getProperties().api_endpoint,
-  "client_id": config.getProperties().client_id
+  "client_id": config.getProperties().client_id,
+  "node_port": config.getProperties().node_port
 }
 
 fs.writeFile("config/global.json", JSON.stringify(global_json), function(err) {
@@ -22,8 +23,8 @@ fs.writeFile("config/global.json", JSON.stringify(global_json), function(err) {
     }
     console.log("The file was saved!");
 });
-
-app.listen(config.getProperties().web_port, () => console.log('Listening on port: ' + config.getProperties().web_port));
+console.log(config.getProperties().node_port);
+app.listen(config.getProperties().node_port, () => console.log('Listening on port: ' + config.getProperties().node_port));
 app.use(express.static(__dirname));
 app.use('/media', express.static(path.join(__dirname, "..", "API"))); //__dir and not _dir
 

@@ -61,6 +61,12 @@ const config = convict({
       default: '000',
       arg: 'client-id',
       env: 'CLIENT_ID'
+    },
+    node_port: {
+      format: Number,
+      default: 10101,
+      arg: 'node-port',
+      env: 'NODE_PORT'
     }
 });
 
