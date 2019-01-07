@@ -49,24 +49,28 @@ async function wrapp() {
 
           getScripts([
               "/js/API.js",
+              "/js/API/TemplateCategory.js",
+              "/js/API/Company.js",
+              "/js/API/Role.js",
               "/js/API/Note.js",
               "/js/API/Audit.js",
               "/js/API/AuditArea.js",
               "/js/API/User.js",
               "/js/utils/utils.js",
               "/dist/jstree/jstree.js",
-              "/js/API/Role.js",
               "/js/API/Category.js",
-              "/js/API/Company.js",
               "/js/API/ClinicType.js",
               "/js/API/Template.js",
-              "/js/API/TemplateCategory.js",
               "/js/API/SpecialtyType.js",
               "/js/API/NewAudit.js",
               "/js/API/IndicatorType.js",
               "/js/API/Indicator.js",
               "/js/API/IndicatorOption.js",
               "/js/API/TemplateIndicator.js"], function () {
+            getRoleList();
+  getUserList();
+  getCompanyList();
+getTemplateCategoryList(sessionStorage.getItem("companyId"), sessionStorage.getItem("templateId"));
             });
           });
 

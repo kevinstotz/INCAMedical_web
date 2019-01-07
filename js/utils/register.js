@@ -20,12 +20,12 @@ function registerNewAuditNewEvents() {
 }
 
 function registerSettingsUserEvents() {
-  getRoleList();
-  getUserList();
+  //getRoleList();
+  //getUserList();
 }
 
 function registerSettingsFacilityEvents() {
-    getCompanyList();
+    //getCompanyList();
 
     $( "#create-facility-button" ).click(function( event ) {
       event.preventDefault();
@@ -442,7 +442,7 @@ function registerSettingsAuditAreaEvents() {
 function registerReportsReportEvents() {}
 
 function registerSettingsTemplateEvents() {
-  getTemplateCategoryList(sessionStorage.getItem("companyId"), sessionStorage.getItem("templateId"));
+  //getTemplateCategoryList(sessionStorage.getItem("companyId"), sessionStorage.getItem("templateId"));
 
   $( "#create-template-button" ).click(function( event ) {
     createTemplate(sessionStorage.getItem("companyId"), $( "#settings-template-select-form" ).serializeObject() );
